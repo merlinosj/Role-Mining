@@ -1,7 +1,7 @@
 '''Syntax to run the file:
   python hillclimbing.py <Input_file_name> <Output_file_name> <no_of_nodes> <no_of_roles>
 Example:
- python hillclimbing.py karate_directed.txt karate_out.txt 34 4
+ python hillclimbing.py 34.txt 6_out.txt 34 4
 '''
 import sys
 import numpy as np
@@ -28,7 +28,8 @@ def centroid_update(candidate,role_median,role_vector,neighbor_role_vector,role)
 	#print 'IN CENTROID FUNCTION'
 	if candidate in predecessor_nodes:
 		neighbors = predecessor_nodes[candidate]
-		neighbor_roles = set(role[candidate])
+		neighbor_roles = set()
+		neighbor_roles.add(role[candidate])
 		for j in neighbors:
 			neighbor_roles.add(role[j])
 		for neighbor_role in neighbor_roles:
@@ -138,22 +139,34 @@ def hill_climbing(fname,no_nodes,no_roles):
 	for x in a:
 	  degrees[int(x[0])]=x[1]
 	degree_set = set(degrees.values())
+	#print 'degree_set',degree_set
 	degree_numpy = np.array(degrees.values())
 	print 'Degree Calculation done...'
-
+	window_size = len(degree_set)/no_roles
+	if len(degree_set)/float(no_roles) > window_size:
+		window_size += 1
+	print 'window_size',window_size
 	role = {}
 	i = 0
+	range_count = 1
 	for degree in degree_set:
 	  ind = np.where(degree_numpy == degree)[0]
+	  
 	  for element in ind:
-		  role[element] = i%no_roles
-	  i += 1
+		  role[element] = i
+	  #print i,range_count,degree
+	  if range_count == window_size:
+		i += 1
+		range_count = 0
+	  range_count += 1
+	  
 	print 'Role Assignment based on degree is done... '
 	for m in xrange(node_count):
 		if m not in role:
 		  role[m] = 0
 	no_roles = len(set(role.values()))
 	print 'Role Count:',no_roles
+	#print 'Initial Roles:',role
 	
 	role_vector = defaultdict(list)
 	
@@ -176,33 +189,28 @@ def hill_climbing(fname,no_nodes,no_roles):
 		print 'Iteration: ',i
 		no_change_counter = 0
 		for candidate in node_list:
-			'''if int(candidate)%10 == 0:
+			if int(candidate)%1000 == 0:
 				print 'Candidate is:',candidate
 				#print 'DISTANCE:',distance
-				#print time.time()'''
+				print time.time()
 			#print 'Candidate is:',candidate
 			max_gain = 0
 			max_gain_role_ind = -1
-			max_gain_role = role.copy()
-			max_gain_role_vector = role_vector.copy()
-			max_gain_role_median = role_median.copy()
-
 			old_role = role[candidate]
 			c_old = len(role_vector[old_role])
 			old_centroid_old = sum(item*item for item in role_median[old_role])
 			for new_role in xrange(no_roles): #Iteration through all the roles
 				#print 'NEW ROLE:',new_role
-				role_new = role.copy()
-				role_new[candidate] = new_role
-				if len(set(role_new.values())) == no_roles and new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
-					role_vector_new = deepcopy(role_vector)
-					role_vector_new[old_role].remove(candidate)
-					role_vector_new[new_role].append(candidate)
+				role[candidate] = new_role
+				if len(set(role.values())) == no_roles and new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
+					role_vector[old_role].remove(candidate)
+					role_vector[new_role].append(candidate)
 					
-					#Intermediate Centroid Calculation. Actual function is Centroid Update. Now it is commented out and all role centroid calculation is used for debugging purpose
-					
-					#intermediate_median = centroid_update(candidate,max_gain_role_median.copy(),role_vector_new,neighbor_role_vector,role_new)
-					intermediate_median=centroid_calculation(role_vector_new,neighbor_role_vector)
+					#Intermediate Centroid Calculation.
+					role_median_temp = {}
+					role_median_temp[old_role]=role_median[old_role]
+					role_median_temp[new_role]=role_median[new_role]
+					intermediate_median = intermediate_median_calculation(old_role,new_role,role_median_temp,role_vector,neighbor_role_vector)
 				
 					#Value A Calculation
 					c_new = len(role_vector[new_role])
@@ -228,37 +236,33 @@ def hill_climbing(fname,no_nodes,no_roles):
 					#R_L Calculation
 					R_l = 0
 					for keys in dl:
-					  R_l += 2*dl[keys] * ((intermediate_median[keys][old_role])-(intermediate_median[keys][new_role])-(dl[keys]/float(len(role_vector_new[keys]))))
+					  if keys == old_role or keys == new_role:
+						R_l += 2*dl[keys] * ((intermediate_median[keys][old_role])-(intermediate_median[keys][new_role])-(dl[keys]/float(len(role_vector[keys]))))
+					  else:
+						R_l += 2*dl[keys] * ((role_median[keys][old_role])-(role_median[keys][new_role])-(dl[keys]/float(len(role_vector[keys]))))
+					  
 
 					
 					gain = B_w - R_l - A #Gain Calculation
 					if gain > max_gain:
 						max_gain = gain
 						max_gain_role_ind = new_role
-						max_gain_role = role_new.copy()
-						max_gain_role_vector = role_vector_new.copy()
+					role[candidate] = old_role
+					role_vector[old_role].append(candidate)
+					role_vector[new_role].remove(candidate)
 
 
 					    
 			if max_gain_role_ind <> -1:
-			  print 'Optimal Gain for ',candidate,' moving from ',old_role,' to ',max_gain_role_ind,' is ',max_gain
-			  max_gain_neighbor_role_vector = role_update(candidate,old_role,new_role,deepcopy(neighbor_role_vector))
+			  #print 'Optimal Gain for ',candidate,' moving from ',old_role,' to ',max_gain_role_ind,' is ',max_gain
+			  role[candidate] = max_gain_role_ind
+			  neighbor_role_vector = role_update(candidate,old_role,max_gain_role_ind,neighbor_role_vector)
 			  #Actual Function that updates centroid of the node and its predecessors. Commented out now for debugging and all role centroid calculation is used for debugging purpose
-			  #max_gain_role_median = centroid_update(candidate,max_gain_role_median,max_gain_role_vector,max_gain_neighbor_role_vector,max_gain_role)
-			  max_gain_role_median=centroid_calculation(max_gain_role_vector,max_gain_neighbor_role_vector) #All Role Centroid Calculation
+			  role_vector[old_role].remove(candidate)
+			  role_vector[max_gain_role_ind].append(candidate)
+			  #role_median=centroid_calculation(role_vector,neighbor_role_vector) #All Role Centroid Calculation
+			  role_median = centroid_update(candidate,role_median,role_vector,neighbor_role_vector,role)			  
 			  #Distance Calculation used for debugging purpose    
-			  fr_value_sum = sum(F_calculation_new(neighbor_role_vector,role,role_vector,role_median,node_count))
-			  fr_value_new=F_calculation_new(max_gain_neighbor_role_vector,max_gain_role,max_gain_role_vector,max_gain_role_median,node_count)
-			  fr_value_sum_new = sum(fr_value_new)
-			  distance = fr_value_sum_new
-			  print 'OLD DISTANCE:',fr_value_sum
-			  print 'NEW DISTANCE:',distance
-			  #Updating the profiles and centroids
-			  role = max_gain_role.copy()
-			  role_vector = max_gain_role_vector.copy()
-			  neighbor_role_vector = max_gain_neighbor_role_vector
-			  role_median = max_gain_role_median.copy()
-			  fr_value_sum = fr_value_sum_new
 			  
 			else:
 			  #print 'NO CHANGE IN ROLE FOR NODE',candidate
@@ -270,8 +274,11 @@ def hill_climbing(fname,no_nodes,no_roles):
 		if no_change_counter == node_count:
 		#if i == 2:
 			flag = False
+		fr_value_new=F_calculation_new(neighbor_role_vector,role,role_vector,role_median,node_count)
+		fr_value_sum_new = sum(fr_value_new)
+		distance = fr_value_sum_new
 	print 'Final Distance:',distance
-	print 'Final Role:',role
+	#print 'Final Role:',role
 	return role,distance
 	
 
@@ -280,7 +287,7 @@ i_filename = sys.argv[1]
 o_filename = sys.argv[2]
 no_nodes = int(sys.argv[3])
 no_roles = int(sys.argv[4])
-'''
+
 with open(o_filename,'ab') as outfile:
 	text = 'NODE COUNT: '+str(no_nodes)+'\n'
 	outfile.write(text)
@@ -296,12 +303,12 @@ with open(o_filename,'ab') as outfile:
 	total_time = end_time - st_time
 	text = 'TOTAL TIME: '+ str(total_time)+'\n'
 	outfile.write(text)
-	'''
-roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)	
+	
+'''roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)	
 colors = ['red','green','blue','yellow','cyan','orange','brown','white','purple','pink','coral','violet','gold','plum','lightgreen']
 #print colors
 with open(o_filename,'ab') as outfile:
 	for i in xrange(no_nodes):
 		text = str((i+1))+' [style = \"filled\" color= \"' + colors[roles_final[i]] + '\"];\n'
 		outfile.write(text)	
-	outfile.write('}')
+	outfile.write('}')'''
