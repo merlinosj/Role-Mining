@@ -8,23 +8,22 @@ import numpy as np
 from copy import deepcopy
 from collections import defaultdict,OrderedDict,Counter
 import time
+from operator import sub,add
 neighbor_nodes = {}
 predecessor_nodes = {}
+sigma = {}
 
 '''Intermediate Centroid calculation which updates the centroid of the old role and new role of the node. The rest are intact'''
-def intermediate_median_calculation(old_role,new_role,role_median,role_vector,neighbor_role_vector):
-	neighbor_roles = {old_role,new_role}
-	for neighbor_role in neighbor_roles:
-		role_candidates = role_vector[neighbor_role]
-		median_vector = []
-		for node in role_candidates:
-			median_vector.append(neighbor_role_vector[node])
-		role_median[neighbor_role]=list(np.mean(median_vector, axis = 0))
+def intermediate_median_calculation(candidate,old_role,new_role,role_median,role_vector,neighbor_role_vector):
+        global sigma
+
+        role_median[old_role] = [x / float(len(role_vector[old_role])) for x in sigma[old_role]]
+        role_median[new_role] = [x / float(len(role_vector[new_role])) for x in sigma[new_role]]
 	return role_median
       
 '''Profile Update Function that updates the centroids of the node and its predecessors'''
 def centroid_update(candidate,role_median,role_vector,neighbor_role_vector,role):
-	global predecessor_nodes
+	global predecessor_nodes,sigma
 	#print 'IN CENTROID FUNCTION'
 	if candidate in predecessor_nodes:
 		neighbors = predecessor_nodes[candidate]
@@ -33,11 +32,7 @@ def centroid_update(candidate,role_median,role_vector,neighbor_role_vector,role)
 		for j in neighbors:
 			neighbor_roles.add(role[j])
 		for neighbor_role in neighbor_roles:
-			role_candidates = role_vector[neighbor_role]
-			median_vector = []
-			for node in role_candidates:
-				median_vector.append(neighbor_role_vector[node])
-			role_median[neighbor_role]=list(np.mean(median_vector, axis = 0))
+			role_median[neighbor_role] = [x / float(len(role_vector[neighbor_role])) for x in sigma[neighbor_role]]
 	#print role_median
 	return role_median
 
@@ -53,11 +48,22 @@ def centroid_calculation(role_vector,neighbor_role_vector):
 		role_median[key]=list(np.mean(median_vector, axis = 0))
 	return role_median
       
+def sigma_calculation(role_vector,neighbor_role_vector):
+	#print 'IN CENTROID FUNCTION'
+	global sigma
+	
+	for key in role_vector:
+		role_candidates = role_vector[key]
+		median_vector = []
+		for node in role_candidates:
+			median_vector.append(neighbor_role_vector[node])
+		sigma[key]=list(np.sum(median_vector, axis = 0))
+  
 
       
 '''Profile Creation using the neighbor details and their respective roles'''
 def role_population(role,node_count,no_roles,role_vector):
-        global neighbor_nodes
+        global neighbor_nodes,sigma
 	neighbor_role_vector = [[0 for j in xrange(no_roles)] for i in xrange(node_count)]
 	for key in  neighbor_nodes:
 		neighbors = neighbor_nodes[key]
@@ -65,21 +71,22 @@ def role_population(role,node_count,no_roles,role_vector):
 			neighbor_role = role[neighbors[j]]
 			neighbor_role_vector[key][neighbor_role] += 1
 	role_median = centroid_calculation(role_vector,neighbor_role_vector)
+	sigma_calculation(role_vector,neighbor_role_vector)
 	return neighbor_role_vector,role_median
 
 '''Profile updating function for a node for which the role is changed. The profile of predecessor of the node is updated'''
-def role_update(candidate,candidate_old_role,candidate_new_role,neighbor_role_vector):
-        global predecessor_nodes
+def role_update(candidate,candidate_old_role,candidate_new_role,neighbor_role_vector,role):
+        global predecessor_nodes,sigma
 	if candidate in predecessor_nodes:
 		neighbors = predecessor_nodes[candidate]
 				
 		for j in neighbors:
-			#print 'PREDECESSOR:',j
-			#print neighbor_role_vector[j]
+			#print 'PREDECESSOR:',j,role[j]
+			neighbor_role = role[j]
+			sigma[neighbor_role][candidate_old_role] -=  1
+			sigma[neighbor_role][candidate_new_role] +=  1
 			neighbor_role_vector[j][candidate_new_role] +=  1
 			neighbor_role_vector[j][candidate_old_role] -=  1
-			#print neighbor_role_vector[j]
-		#role_median = centroid_update(candidate,role_median,role_vector,neighbor_role_vector,neighbor_nodes,role)
 	return neighbor_role_vector
       
       
@@ -97,7 +104,7 @@ def F_calculation_new(neighbor_role_vector,role,role_vector,role_median,node_cou
 '''The main function that reads the graph and calls functions to develop profiles and use them for clustering'''
 
 def hill_climbing(fname,no_nodes,no_roles):
-        global neighbor_nodes,predecessor_nodes
+        global neighbor_nodes,predecessor_nodes,sigma
 	f = open(fname, 'r+')
 	fromNode = []
 	#edgeList = []
@@ -180,7 +187,8 @@ def hill_climbing(fname,no_nodes,no_roles):
 	#print 'role_median',role_median	
 	fr_value = F_calculation_new(neighbor_role_vector,role,role_vector,role_median,node_count)
 	fr_value_sum = sum(fr_value)
-	print 'Initial Distance',fr_value_sum	
+	print 'Initial Distance',fr_value_sum
+	print 'TIME:',time.time()
 	node_list = [i for i in xrange(node_count)]
 	flag = True
 	i = 1
@@ -189,10 +197,10 @@ def hill_climbing(fname,no_nodes,no_roles):
 		print 'Iteration: ',i
 		no_change_counter = 0
 		for candidate in node_list:
-			if int(candidate)%1000 == 0:
+			'''if int(candidate)%1000 == 0:
 				print 'Candidate is:',candidate
 				#print 'DISTANCE:',distance
-				print time.time()
+				print time.time()'''
 			#print 'Candidate is:',candidate
 			max_gain = 0
 			max_gain_role_ind = -1
@@ -205,12 +213,13 @@ def hill_climbing(fname,no_nodes,no_roles):
 				if len(set(role.values())) == no_roles and new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
 					role_vector[old_role].remove(candidate)
 					role_vector[new_role].append(candidate)
-					
+					sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
+					sigma[new_role] = map(add, sigma[new_role], neighbor_role_vector[candidate])
 					#Intermediate Centroid Calculation.
 					role_median_temp = {}
 					role_median_temp[old_role]=role_median[old_role]
 					role_median_temp[new_role]=role_median[new_role]
-					intermediate_median = intermediate_median_calculation(old_role,new_role,role_median_temp,role_vector,neighbor_role_vector)
+					intermediate_median = intermediate_median_calculation(candidate,old_role,new_role,role_median_temp,role_vector,neighbor_role_vector)
 				
 					#Value A Calculation
 					c_new = len(role_vector[new_role])
@@ -250,16 +259,21 @@ def hill_climbing(fname,no_nodes,no_roles):
 					role[candidate] = old_role
 					role_vector[old_role].append(candidate)
 					role_vector[new_role].remove(candidate)
+					sigma[old_role] = map(add, sigma[old_role], neighbor_role_vector[candidate])
+					sigma[new_role] = map(sub, sigma[new_role], neighbor_role_vector[candidate])
 
 
 					    
 			if max_gain_role_ind <> -1:
 			  #print 'Optimal Gain for ',candidate,' moving from ',old_role,' to ',max_gain_role_ind,' is ',max_gain
 			  role[candidate] = max_gain_role_ind
-			  neighbor_role_vector = role_update(candidate,old_role,max_gain_role_ind,neighbor_role_vector)
-			  #Actual Function that updates centroid of the node and its predecessors. Commented out now for debugging and all role centroid calculation is used for debugging purpose
 			  role_vector[old_role].remove(candidate)
 			  role_vector[max_gain_role_ind].append(candidate)
+			  sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
+			  sigma[max_gain_role_ind] = map(add, sigma[max_gain_role_ind], neighbor_role_vector[candidate])			  
+			  neighbor_role_vector = role_update(candidate,old_role,max_gain_role_ind,neighbor_role_vector,role)
+			  #Actual Function that updates centroid of the node and its predecessors. Commented out now for debugging and all role centroid calculation is used for debugging purpose
+
 			  #role_median=centroid_calculation(role_vector,neighbor_role_vector) #All Role Centroid Calculation
 			  role_median = centroid_update(candidate,role_median,role_vector,neighbor_role_vector,role)			  
 			  #Distance Calculation used for debugging purpose    
@@ -277,8 +291,11 @@ def hill_climbing(fname,no_nodes,no_roles):
 		fr_value_new=F_calculation_new(neighbor_role_vector,role,role_vector,role_median,node_count)
 		fr_value_sum_new = sum(fr_value_new)
 		distance = fr_value_sum_new
+		print 'DISTANCE:',distance
+		print 'NODES UNCHANGED:',no_change_counter
+		print 'TIME:',time.time()
 	print 'Final Distance:',distance
-	#print 'Final Role:',role
+	print 'Final Role:',role
 	return role,distance
 	
 
