@@ -1,40 +1,11 @@
 #python exact.py 10.txt 10
 import sys
-import collections
 import numpy as np
-import math
-from numpy import median
-import random
-from copy import deepcopy
-from scipy.cluster.vq import kmeans2
-from collections import defaultdict,OrderedDict
+from collections import defaultdict,OrderedDict,Counter
 import operator
+import time
+from os.path import basename
 profile = {}
-'''Profile Distance Calculation using the neighbor role vector'''
-def F_calculation_new(neighbor_role_vector,role,role_vector,node_count):
-	fr_value = [0 for i in xrange(node_count)]
-	role_median = []
-	for role_candidates in role_vector:
-		median_vector = []
-		#val = neighbor_role_vector[role_candidates[0]]
-		for node in role_candidates:
-			median_vector.append(neighbor_role_vector[node])
-			#if val <> neighbor_role_vector[node]:
-			  #print 'ROLE MATCH',role_candidates[0],node
-		print median_vector
-		role_median.append(list(median(median_vector, axis = 0)))
-		#role_median.append(neighbor_role_vector[role_candidates[0]])
-	print role_median
-	print 'Centriod Calculation is done...'
-	for i in xrange(node_count):
-		idx = -1
-		node_role_id = int(role[i])
-		res=sum(list(np.power(np.array(role_median[node_role_id]) - np.array(neighbor_role_vector[i]),2)))
-		#print 'Distance of node ',i,' is:',math.sqrt(res)
-		print res
-		sum_total = math.sqrt(res)
-		fr_value[i] = sum_total
-	return fr_value
 
 '''Role Vector population(P) using the neighbor details and their respective role'''
 def role_population(neighbor_nodes,role,node_count,no_roles):
@@ -51,12 +22,11 @@ def role_population(neighbor_nodes,role,node_count,no_roles):
   return neighbor_role_vector
 
 '''The main function that clusters the nodes with same edges that have similar roles'''
-def exact_role_assignment(fname,no_nodes):
+def exact_role_assignment(fname):
   global profile
   f = open(fname, 'r+')
   fromNode = []
   #edgeList = []
-  #neighbor_nodes=[[] for i in xrange(no_nodes)]
   neighbor_nodes = {}
   neighbor = []
   flag1 = 0
@@ -95,7 +65,7 @@ def exact_role_assignment(fname,no_nodes):
 			  neighbor.append(dst_node)
   neighbor_nodes[old_node]=neighbor
   print 'Reading File is done...'
-  counter1=collections.Counter(fromNode)
+  counter1=Counter(fromNode)
   a = counter1.most_common(node_count)
   degrees = {}
   for x in a:
@@ -116,11 +86,6 @@ def exact_role_assignment(fname,no_nodes):
       role[m] = i
   no_roles = len(set(role.values()))
   print 'Role Count:',no_roles
-  role_vector = [[] for x in xrange(no_roles)]
-  #Random Role Assignment
-  for key in role:
-	  role_id = role[key]
-	  role_vector[role_id].append(key)
 
   neighbor_role_vector = role_population(neighbor_nodes,role,node_count,no_roles)
   #print neighbor_nodes
@@ -128,9 +93,7 @@ def exact_role_assignment(fname,no_nodes):
   #print profile
   #sorted_profile = sorted(profile, key=itemgetter(*range(no_roles)))
   #print sorted_profile
-  '''fr_value = F_calculation_new(neighbor_role_vector,role,role_vector,node_count)
-  score = sum(fr_value)
-  print 'Score:',score'''
+
   iteration = 1
 
   '''if score == 0:
@@ -138,7 +101,6 @@ def exact_role_assignment(fname,no_nodes):
   flag = True
   while flag:
 	  print 'Iteration:', iteration
-	  role_new = deepcopy(role)
 	  role_list = [i for i in xrange(no_roles)]
 	  profile = neighbor_role_vector
 	  sorted_profile = sorted(profile.items(), key=operator.itemgetter(1))
@@ -146,29 +108,21 @@ def exact_role_assignment(fname,no_nodes):
 	  z = zip(*sorted_profile)
 	  r = 0
 	  profile1 = 0
-	  role_new[z[0][profile1]] = r
+	  role[z[0][profile1]] = r
 	  for profile2 in xrange(1,len(z[0])):
 	    if z[1][profile1] == z[1][profile2]:
 	      #print 'MATCHING',z[0][profile1],z[0][profile2]
-	      role_new[z[0][profile2]] = r
+	      role[z[0][profile2]] = r
 	    else:
 	      r += 1
-	      role_new[z[0][profile2]] = r
+	      role[z[0][profile2]] = r
 	      profile1 = profile2
 	  print 'profile comparision is done....'
-	  no_roles_new = len(set(role_new.values()))
+	  no_roles_new = len(set(role.values()))
 	  print 'New Role Count:',no_roles_new
-	  role_vector_new = [[] for x in xrange(no_roles_new)]
-	  for key in role_new:
-		  role_id = role_new[key]
-		  role_vector_new[role_id].append(key)
-	  neighbor_role_vector = role_population(neighbor_nodes,role_new,node_count,no_roles_new)
+	  neighbor_role_vector = role_population(neighbor_nodes,role,node_count,no_roles_new)
 	  print 'Role Vector Population done...'
-	  #print neighbor_role_vector
-	  '''fr_value= F_calculation_new(neighbor_role_vector,role_new,role_vector_new,node_count)
-	  print 'Score Calculation done...'
-	  score = sum(fr_value)
-	  print 'Score:',score'''
+
 	  if no_roles_new > no_roles:
 		no_roles = no_roles_new
 	  else:
@@ -176,13 +130,39 @@ def exact_role_assignment(fname,no_nodes):
 	  iteration += 1
 	  #if iteration == 2:
 	  	#break
-  return role_new
+  return role,no_roles_new,node_count,flag2
 
 i_filename = sys.argv[1]
-no_nodes = int(sys.argv[2])
+file_name = basename(i_filename).split('.')[0]
+print file_name
+stats_filename = 'logs/'+file_name +'_exact_statistics.log'
+output_filename = 'output/'+file_name +'_exact_output.txt'
+st_time = time.time()
+roles_final,no_roles,node_count,flag = exact_role_assignment(i_filename)
+end_time = time.time()
 
-roles_final = exact_role_assignment(i_filename,no_nodes)
-print 'No of Roles:',len(set(roles_final.values()))
+print 'No of Roles:',no_roles
+with open(stats_filename,'wb') as outfile:
+	text = 'FILE NAME: '+str(file_name)+'\n'
+	outfile.write(text)
+	text = 'NODE COUNT: '+str(node_count)+'\n'
+	outfile.write(text)
+	text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	outfile.write(text)
+	text = 'START TIME: '+ str(st_time)+'\n'
+	outfile.write(text)
+	text = 'END TIME: '+ str(end_time)+'\n'
+	outfile.write(text)
+	total_time = end_time - st_time
+	text = 'TOTAL TIME: '+ str(total_time)+'\n'
+	outfile.write(text)
+with open(output_filename,'wb') as outfile:
+  for key, value in roles_final.iteritems():
+    if flag == 1:
+      text = str(key+1) +'\t' +str(value) +'\n'
+    else:
+      text = str(key) +'\t' +str(value) +'\n'
+    outfile.write(text)
 	
 
 
