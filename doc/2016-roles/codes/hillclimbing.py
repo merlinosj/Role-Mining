@@ -185,10 +185,10 @@ def hill_climbing(fname,no_roles):
 	print 'TIME:',time.time()
 	node_list = [i for i in xrange(node_count)]
 	flag = True
-	i = 1
+	iteration = 1
 	distance = 0
 	while flag:
-		print 'Iteration: ',i
+		print 'Iteration: ',iteration
 		no_change_counter = 0
 		for candidate in node_list:
 			'''if int(candidate)%1000 == 0:
@@ -279,7 +279,7 @@ def hill_climbing(fname,no_roles):
 
 
 				
-		i += 1
+		iteration += 1
 		if no_change_counter == node_count:
 		#if i == 2:
 			flag = False
@@ -289,7 +289,7 @@ def hill_climbing(fname,no_roles):
 		print 'TIME:',time.time()
 	print 'Final Distance:',distance
 	#print 'Final Role:',role
-	return node_count,role,distance,flag2
+	return node_count,role,distance,iteration-1,flag2
 	
 
 
@@ -300,14 +300,16 @@ print file_name
 stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
 output_filename = 'output/'+file_name +'_hill_output.txt'
 st_time = time.time()
-node_count,roles_final,score,flag = hill_climbing(i_filename,no_roles)
+node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles)
 end_time = time.time()
-with open(stats_filename,'wb') as outfile:
+with open(stats_filename,'ab') as outfile:
 	text = 'FILE NAME: '+str(file_name)+'\n'
 	outfile.write(text)
 	text = 'NODE COUNT: '+str(node_count)+'\n'
 	outfile.write(text)
 	text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	outfile.write(text)
+	text = 'ITERATIONS: '+str(iteration)+'\n'
 	outfile.write(text)
 	text =  'FINAL DISTANCE: '+ str(score)+'\n'
 	outfile.write(text)
