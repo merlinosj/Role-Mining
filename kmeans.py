@@ -111,11 +111,11 @@ def Role_clustering(fname,no_roles):
 	print 'Initial Distance',distance
 	print 'TIME:',time.time()
 	flag = True
-	loop = 1
+	iteration = 1
 	stop_flag = False
 	while flag:
 		print '================================'
-		print 'Iteration:',loop	
+		print 'Iteration:',iteration	
 		flag1 = True
 		while flag1:
 		  try:
@@ -143,13 +143,13 @@ def Role_clustering(fname,no_roles):
 			  role[i]=role_new[i]
 
 			
-		  loop += 1
+		  iteration += 1
 		else:
 		  #if loop == 100 or sum(fr_value_new) == 0:
 		  flag = False
 		  print 'Final Profile Distance:',distance
 		  #print 'Final Role Vectors:',role
-		  return role_new,node_count,distance,flag2	
+		  return role_new,node_count,distance,loop,flag2	
 
 
 i_filename = sys.argv[1]
@@ -159,7 +159,7 @@ print file_name
 stats_filename = 'logs/'+file_name +'_kmeans_statistics.txt'
 output_filename = 'output/'+file_name +'_kmeans_output.txt'
 st_time = time.time()
-roles_final,node_count,distance,flag = Role_clustering(i_filename,no_roles)
+roles_final,node_count,distance,iteration-1,flag = Role_clustering(i_filename,no_roles)
 end_time = time.time()
 with open(stats_filename,'wb') as outfile:
 	text = 'FILE NAME: '+str(file_name)+'\n'
@@ -167,6 +167,8 @@ with open(stats_filename,'wb') as outfile:
 	text = 'NODE COUNT: '+str(node_count)+'\n'
 	outfile.write(text)
 	text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	outfile.write(text)
+	text = 'ITERATIONS: '+str(iteration)+'\n'
 	outfile.write(text)
 	text =  'FINAL DISTANCE: '+ str(distance)+'\n'
 	outfile.write(text)
@@ -185,7 +187,7 @@ with open(output_filename,'wb') as outfile:
       text = str(key) +'\t' +str(roles_final[key]) +'\n'
     outfile.write(text)
 
-o_filename = 'color.txt'
+'''o_filename = 'color.txt'
 #colors = get_spaced_colors(no_roles)
 colors = ['red','green','blue','yellow','cyan','orange','brown','white','purple','pink','coral','violet','gold','plum','lightgreen']
 #print colors
@@ -193,6 +195,6 @@ with open(o_filename,'wb') as outfile:
 	for i in xrange(node_count):
 		text = str((i+1))+' [style = \"filled\" color= \"' + colors[roles_final[i]] + '\"];\n'
 		outfile.write(text)	
-	outfile.write('}')	
+	outfile.write('}')	'''
 
 

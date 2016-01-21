@@ -130,7 +130,7 @@ def exact_role_assignment(fname):
 	  iteration += 1
 	  #if iteration == 2:
 	  	#break
-  return role,no_roles_new,node_count,flag2
+  return role,no_roles_new,node_count,iteration-1,flag2
 
 i_filename = sys.argv[1]
 file_name = basename(i_filename).split('.')[0]
@@ -138,7 +138,7 @@ print file_name
 stats_filename = 'logs/'+file_name +'_exact_statistics.log'
 output_filename = 'output/'+file_name +'_exact_output.txt'
 st_time = time.time()
-roles_final,no_roles,node_count,flag = exact_role_assignment(i_filename)
+roles_final,no_roles,node_count,iteration,flag = exact_role_assignment(i_filename)
 end_time = time.time()
 
 print 'No of Roles:',no_roles
@@ -148,6 +148,8 @@ with open(stats_filename,'wb') as outfile:
 	text = 'NODE COUNT: '+str(node_count)+'\n'
 	outfile.write(text)
 	text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	outfile.write(text)
+	text = 'ITERATIONS: '+str(iteration)+'\n'
 	outfile.write(text)
 	text = 'START TIME: '+ str(st_time)+'\n'
 	outfile.write(text)
