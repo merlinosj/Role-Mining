@@ -149,7 +149,7 @@ def Role_clustering(fname,no_roles):
 		  flag = False
 		  print 'Final Profile Distance:',distance
 		  #print 'Final Role Vectors:',role
-		  return role_new,node_count,distance,loop,flag2	
+		  return role_new,node_count,distance,iteration-1,flag2	
 
 
 i_filename = sys.argv[1]
@@ -159,7 +159,7 @@ print file_name
 stats_filename = 'logs/'+file_name +'_kmeans_statistics.txt'
 output_filename = 'output/'+file_name +'_kmeans_output.txt'
 st_time = time.time()
-roles_final,node_count,distance,iteration-1,flag = Role_clustering(i_filename,no_roles)
+roles_final,node_count,distance,iteration,flag = Role_clustering(i_filename,no_roles)
 end_time = time.time()
 with open(stats_filename,'wb') as outfile:
 	text = 'FILE NAME: '+str(file_name)+'\n'
