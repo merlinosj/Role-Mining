@@ -119,15 +119,17 @@ def Role_clustering(fname,no_roles):
 		flag1 = True
 		while flag1:
 		  try:
-		  	(centroid,role_new) = kmeans2(np.array(neighbor_role_vector),no_roles)
+		  	(centroid,role_new) = kmeans2(np.array(neighbor_role_vector),no_roles,minit='points')
 		  	if len(set(role_new)) == no_roles:
 				#print 'Matching'
 		    		flag1 = False
+			#else:
+				#print 'some empty clusters'
 		  except :
 			flag1 = False
 			stop_flag = True
 
-		#print 'Centroid:',centroid
+		print 'KMEANS IS DONE!!'
 		
 		#Distance Calculation
 		distance_new = F_calculation_new(neighbor_role_vector,role_new,node_count,centroid)
