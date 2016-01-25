@@ -65,8 +65,9 @@ def sigma_calculation(role_vector,neighbor_role_vector):
       
 '''Profile Creation using the neighbor details and their respective roles'''
 def role_population(role,node_count,no_roles,role_vector):
-        global neighbor_nodes,sigma
-	neighbor_role_vector = [[0 for j in xrange(no_roles)] for i in xrange(node_count)]
+	global neighbor_nodes,sigma
+	neighbor_role_vector = np.zeros((node_count,no_roles))
+	#neighbor_role_vector = [[0 for j in xrange(no_roles)] for i in xrange(node_count)]
 	for key in  neighbor_nodes:
 		neighbors = neighbor_nodes[key]
 		for j in xrange(len(neighbors)):
@@ -152,7 +153,7 @@ def hill_climbing(fname,no_roles,threshold):
 	if len(degree_set)/float(no_roles) > window_size:
 		window_size += 1
 	#print 'window_size',window_size
-	role = {}
+	role = [0 for i in xrange(node_count)]
 	i = 0
 	range_count = 1
 	for degree in degree_set:
@@ -167,15 +168,15 @@ def hill_climbing(fname,no_roles,threshold):
 	  range_count += 1
 	  
 	print 'Role Assignment based on degree is done... '
-	for m in xrange(node_count):
+	'''for m in xrange(node_count):
 		if m not in role:
-		  role[m] = 0
-	no_roles = len(set(role.values()))
+		  role[m] = 0'''
+	#no_roles = len(set(role.values()))
 	role_vector = defaultdict(list)
 	role_vector_length = defaultdict(int)
 	
 	#Role Vector Update
-	for key in role:
+	for key in xrange(len(role)):
 	  role_id = role[key]
 	  role_vector[role_id].append(key)
 	  role_vector_length[role_id] += 1
@@ -183,7 +184,7 @@ def hill_climbing(fname,no_roles,threshold):
 	fr_value_sum = F_calculation_new(neighbor_role_vector,role,role_median,node_count)
 	print 'Initial Distance',fr_value_sum
 	print 'TIME:',time.time()
-	#threshold = 5
+	threshold = 5
 	iteration = 1
 	role_change_flag = True
 	while role_change_flag:
@@ -193,14 +194,17 @@ def hill_climbing(fname,no_roles,threshold):
 		inner_iteration = 1
 		distance = 0
 		idle = [0 for i in xrange(node_count)]
+		node_list_count = node_count
 		while flag:
 			print 'inner_iteration: ',inner_iteration
+			print 'TIME:',time.time()
 			no_change_counter = 0
+			
 			for candidate in node_list:
-				'''if int(candidate)%1000 == 0:
+				if int(candidate)%100000 == 0:
 					print 'Candidate is:',candidate
 					#print 'DISTANCE:',distance
-					print time.time()'''
+					print time.time()
 				#print 'Candidate is:',candidate
 				max_gain = 0
 				max_gain_role_ind = -1
@@ -210,7 +214,7 @@ def hill_climbing(fname,no_roles,threshold):
 				for new_role in xrange(no_roles): #Iteration through all the roles
 					#print 'NEW ROLE:',new_role
 					role[candidate] = new_role
-					if len(set(role.values())) == no_roles and new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
+					if new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
 						role_vector_length[old_role] -= 1
 						role_vector_length[new_role] += 1
 						sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
@@ -245,10 +249,14 @@ def hill_climbing(fname,no_roles,threshold):
 						#R_L Calculation
 						R_l = 0
 						for keys in dl:
-						  if keys == old_role or keys == new_role:
-							R_l += 2*dl[keys] * ((intermediate_median[keys][old_role])-(intermediate_median[keys][new_role])-(dl[keys]/float(role_vector_length[keys])))
+						  if role_vector_length[keys] == 0:
+							dl_cl = 0
 						  else:
-							R_l += 2*dl[keys] * ((role_median[keys][old_role])-(role_median[keys][new_role])-(dl[keys]/float(role_vector_length[keys])))
+							dl_cl = dl[keys]/float(role_vector_length[keys])
+						  if keys == old_role or keys == new_role:
+							R_l += 2*dl[keys] * ((intermediate_median[keys][old_role])-(intermediate_median[keys][new_role])-dl_cl)
+						  else:
+							R_l += 2*dl[keys] * ((role_median[keys][old_role])-(role_median[keys][new_role])-dl_cl)
 						  
 
 						
@@ -284,11 +292,12 @@ def hill_climbing(fname,no_roles,threshold):
 				  idle[candidate] += 1
 				  no_change_counter += 1
 				  if idle[candidate] == threshold:
-					node_list.remove(candidate)
+				     node_list_count -= 1
+				     node_list.remove(candidate)
 
 			inner_iteration += 1
-			print 'Number of candidates',len(node_list)
-			if no_change_counter >= len(node_list):
+			print 'Number of candidates',node_list_count
+			if no_change_counter >= node_list_count:
 				flag = False
 			if no_change_counter == node_count:
 				role_change_flag = False
@@ -335,11 +344,11 @@ with open(stats_filename,'ab') as outfile:
 	text = 'TOTAL TIME: '+ str(total_time)+'\n'
 	outfile.write(text)
 with open(output_filename,'wb') as outfile:
-  for key, value in roles_final.iteritems():
+  for key in xrange(len(roles_final)):
     if flag == 1:
-      text = str(key+1) +'\t' +str(value) +'\n'
+      text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
     else:
-      text = str(key) +'\t' +str(value) +'\n'
+      text = str(key) +'\t' +str(roles_final[key]) +'\n'
     outfile.write(text)
   
 '''roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)	
