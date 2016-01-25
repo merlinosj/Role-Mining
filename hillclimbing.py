@@ -1,7 +1,7 @@
 '''Syntax to run the file:
-  python hillclimbing.py <Input_file_name> <Output_file_name> <no_of_nodes> <no_of_roles>
+  python hillclimbing.py <Input_file_name>
 Example:
- python hillclimbing.py 34.txt 6_out.txt 34 4
+ python hillclimbing.py 34.txt
 '''
 import sys
 import numpy as np
