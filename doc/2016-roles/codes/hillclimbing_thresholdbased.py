@@ -102,7 +102,7 @@ def F_calculation_new(neighbor_role_vector,role,role_median,node_count):
 
 '''The main function that reads the graph and calls functions to develop profiles and use them for clustering'''
 
-def hill_climbing(fname,no_roles):
+def hill_climbing(fname,no_roles,threshold):
         global neighbor_nodes,predecessor_nodes,sigma
 	f = open(fname, 'r+')
 	fromNode = []
@@ -183,7 +183,7 @@ def hill_climbing(fname,no_roles):
 	fr_value_sum = F_calculation_new(neighbor_role_vector,role,role_median,node_count)
 	print 'Initial Distance',fr_value_sum
 	print 'TIME:',time.time()
-	threshold = 5
+	#threshold = 5
 	iteration = 1
 	role_change_flag = True
 	while role_change_flag:
@@ -306,12 +306,13 @@ def hill_climbing(fname,no_roles):
 
 i_filename = sys.argv[1]
 no_roles = int(sys.argv[2])
+threshold = int(sys.argv[3])
 file_name = basename(i_filename).split('.')[0]
 print file_name
 stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
 output_filename = 'output/'+file_name +'_hill_output_1.txt'
 st_time = time.time()
-node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles)
+node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles,threshold)
 end_time = time.time()
 with open(stats_filename,'ab') as outfile:
 	text = 'FILE NAME: '+str(file_name)+'\n'
@@ -320,6 +321,8 @@ with open(stats_filename,'ab') as outfile:
 	outfile.write(text)
 	text = 'ROLE COUNT: '+str(no_roles)+'\n'
 	outfile.write(text)
+	text = 'THRESHOLD: '+str(threshold)+'\n'
+	outfile.write(text)	
 	text = 'ITERATIONS: '+str(iteration)+'\n'
 	outfile.write(text)
 	text =  'FINAL DISTANCE: '+ str(score)+'\n'
