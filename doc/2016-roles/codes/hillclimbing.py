@@ -66,7 +66,7 @@ def sigma_calculation(role_vector,neighbor_role_vector):
 '''Profile Creation using the neighbor details and their respective roles'''
 def role_population(role,node_count,no_roles,role_vector):
         global neighbor_nodes,sigma
-	neighbor_role_vector = [[0 for j in xrange(no_roles)] for i in xrange(node_count)]
+	neighbor_role_vector = np.zeros((node_count,no_roles))
 	for key in  neighbor_nodes:
 		neighbors = neighbor_nodes[key]
 		for j in xrange(len(neighbors)):
@@ -152,7 +152,7 @@ def hill_climbing(fname,no_roles):
 	if len(degree_set)/float(no_roles) > window_size:
 		window_size += 1
 	#print 'window_size',window_size
-	role = {}
+	role = [0 for i in xrange(node_count)]
 	i = 0
 	range_count = 1
 	for degree in degree_set:
@@ -167,15 +167,15 @@ def hill_climbing(fname,no_roles):
 	  range_count += 1
 	  
 	print 'Role Assignment based on degree is done... '
-	for m in xrange(node_count):
+	'''for m in xrange(node_count):
 		if m not in role:
-		  role[m] = 0
-	no_roles = len(set(role.values()))
+		  role[m] = 0'''
+	#no_roles = len(set(role.values()))
 	role_vector = defaultdict(list)
 	role_vector_length = defaultdict(int)
 	
 	#Role Vector Update
-	for key in role:
+	for key in xrange(len(role)):
 	  role_id = role[key]
 	  role_vector[role_id].append(key)
 	  role_vector_length[role_id] += 1
@@ -204,7 +204,7 @@ def hill_climbing(fname,no_roles):
 			for new_role in xrange(no_roles): #Iteration through all the roles
 				#print 'NEW ROLE:',new_role
 				role[candidate] = new_role
-				if len(set(role.values())) == no_roles and new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
+				if new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
 					role_vector_length[old_role] -= 1
 					role_vector_length[new_role] += 1
 					sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
@@ -321,11 +321,11 @@ with open(stats_filename,'ab') as outfile:
 	text = 'TOTAL TIME: '+ str(total_time)+'\n'
 	outfile.write(text)
 with open(output_filename,'wb') as outfile:
-  for key, value in roles_final.iteritems():
+  for key in xrange(len(roles_final)):
     if flag == 1:
-      text = str(key+1) +'\t' +str(value) +'\n'
+      text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
     else:
-      text = str(key) +'\t' +str(value) +'\n'
+      text = str(key) +'\t' +str(roles_final[key]) +'\n'
     outfile.write(text)
   
 '''roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)	
