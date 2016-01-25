@@ -13,8 +13,8 @@
  
  There is also a new algorithm with speedup.
   File Name: hillclimbing_thresholdbased.py
- Syntax: python hillclimbing_thresholdbased.py <input_filename> <No_of_roles>
- Example: python hillclimbing_thresholdbased.py data/facebook_directed.txt 10
+ Syntax: python hillclimbing_thresholdbased.py <input_filename> <No_of_roles> <Threshold_value>
+ Example: python hillclimbing_thresholdbased.py data/facebook_directed.txt 10 3
  
   Algorithm:3 K-Means Algorithm
  =============================
