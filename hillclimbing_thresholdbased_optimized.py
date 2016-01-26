@@ -17,9 +17,8 @@ sigma = {}
 '''Intermediate Centroid calculation which updates the centroid of the old role and new role of the node. The rest are intact'''
 def intermediate_median_calculation(candidate,old_role,new_role,role_median,role_vector_length,neighbor_role_vector):
         global sigma
-
-        role_median[old_role] = sigma[old_role] / float(role_vector_length[old_role])
-        role_median[new_role] = sigma[new_role] / float(role_vector_length[new_role]) 
+        role_median[old_role] = compute_centroid(old_role, sigma, role_vector_length)
+        role_median[new_role] = compute_centroid(new_role, sigma, role_vector_length)
 	return role_median
 
 def compute_centroid(role, sigma, role_vector_length):
@@ -210,10 +209,10 @@ def hill_climbing(fname,no_roles,threshold):
 			no_change_counter = 0
 			
 			for candidate in node_list:
-				if int(candidate)%100000 == 0:
+				'''if int(candidate)%100000 == 0:
 					print 'Candidate is:',candidate
 					#print 'DISTANCE:',distance
-					print time.time()
+					print time.time()'''
 				#print 'Candidate is:',candidate
 				max_gain = 0
 				max_gain_role_ind = -1
