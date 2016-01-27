@@ -91,11 +91,12 @@ def Role_clustering(fname,no_roles):
 	degrees = [-1 for i in xrange(node_count)]
 	for x in a:
 	  degrees[int(x[0])]=x[1]
-	flag = True
+	(res,role) = kmeans2(np.array(degrees),no_roles)
+	'''flag = True
 	while flag:
 	  (res,role) = kmeans2(np.array(degrees),no_roles)
 	  if len(set(role)) == no_roles:
-	    flag = False
+	    flag = False'''
 	#print 'Initial K-Means Result',role
 	role_vector = defaultdict(list)
 	for i in xrange(node_count):
@@ -115,8 +116,9 @@ def Role_clustering(fname,no_roles):
 	stop_flag = False
 	while flag:
 		print '================================'
-		print 'Iteration:',iteration	
-		flag1 = True
+		print 'Iteration:',iteration
+		(centroid,role_new) = kmeans2(np.array(neighbor_role_vector),no_roles,minit='points')
+		'''flag1 = True
 		while flag1:
 		  try:
 		  	(centroid,role_new) = kmeans2(np.array(neighbor_role_vector),no_roles,minit='points')
@@ -127,7 +129,7 @@ def Role_clustering(fname,no_roles):
 				#print 'some empty clusters'
 		  except :
 			flag1 = False
-			stop_flag = True
+			stop_flag = True'''
 
 		print 'KMEANS IS DONE!!'
 		
