@@ -171,8 +171,8 @@ def hill_climbing(fname,no_roles,threshold):
 	if len(degree_set)/float(no_roles) > window_size:
 		window_size += 1
 	#print 'window_size',window_size
-	role = [0 for i in xrange(node_count)]
-	i = 0
+	role = [1 for i in xrange(node_count)]
+	'''i = 0
 	range_count = 1
 	for degree in degree_set:
 	  ind = np.where(degree_numpy == degree)[0]
@@ -183,9 +183,9 @@ def hill_climbing(fname,no_roles,threshold):
 	  if range_count == window_size:
 		i += 1
 		range_count = 0
-	  range_count += 1
+	  range_count += 1'''
 	  
-	print 'Role Assignment based on degree is done... '
+	#print 'Role Assignment based on degree is done... '
 	'''for m in xrange(node_count):
 		if m not in role:
 		  role[m] = 0'''
