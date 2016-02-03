@@ -1,0 +1,121 @@
+Author:Jeffrey D. Ullman
+Role:5 Degree:117
+Number of coauthors:117
+Anish Das Sarma	4	55
+M. R. Garey	1	37
+Danny Dolev	6	159
+Arno Siebes	3	46
+Ronald L. Graham	5	99
+Shalom Tsur	2	47
+Jennifer Widom	5	98
+Gabriel M. Kuper	0	44
+Michael Stonebraker	7	179
+Sudarshan S. Chawathe	1	28
+Cheng Yang	4	71
+Neoklis Polyzotis	5	80
+François Bancilhon	0	36
+Himanshu Gupta	4	62
+Chris Clifton	5	85
+Gio Wiederhold	6	171
+Semih Salihoglu	0	12
+Dimitris Fotakis	3	36
+Mayur Datar	0	35
+Parag Agrawal	1	15
+Foto N. Afrati	4	69
+John E. Hopcroft	4	62
+Alon Y. Levy	0	53
+Alexander Birman	0	13
+David Menestrina	1	16
+Vasilis Vassalos	4	59
+Alan Siegel	0	16
+Aditya G. Parameswaran	2	28
+Dan Suciu	6	127
+Walter L. Ruzzo	4	57
+Serge Abiteboul	6	134
+Shinji Fujiwara	0	10
+Matthew S. Hecht	0	4
+Daniel S. Hirschberg	1	27
+George Papageorgiou	1	23
+Bharat K. Bhargava	6	127
+Anand Rajaraman	2	29
+Stephen C. Johnson	0	4
+Harry G. Mairson	0	24
+Svetlozar Nestorov	2	28
+Stephen R. Kimbleton	1	12
+Hans-Jörg Schek	5	86
+Sergey Brin	0	13
+Vinayak R. Borkar	3	41
+Louiqa Raschid	6	113
+Mayank Bawa	0	24
+Katherine A. Morris	0	4
+Yehoshua Sagiv	5	82
+Mihalis Yannakakis	2	90
+Amelia C. Fong	0	2
+Min Fang	2	31
+Peter J. Denning	5	86
+Carlo Zaniolo	5	96
+Ravi Sethi	2	31
+Ronald Fagin	5	96
+Murty Valiveti	0	6
+Allen Van Gelder	3	44
+Yannis Papakonstantinou	3	63
+Alfred V. Aho	1	53
+Fereidoon Sadri	3	32
+Robert W. Floyd	0	12
+Alberto O. Mendelzon	4	80
+Craig Silverstein	1	17
+Henry F. Korth	3	64
+Patricia G. Selinger	2	28
+Arnon Rosenthal	5	88
+Kenneth Steiglitz	2	39
+Catriel Beeri	4	69
+Michael J. Carey	6	155
+Jeffrey F. Naughton	6	126
+Richard T. Snodgrass	5	99
+Raghu Ramakrishnan	7	181
+Janet L. Wiener	4	66
+David Peleg	6	153
+John B. Kam	0	6
+Joan Feigenbaum	5	108
+Michael A. Harrison	2	26
+Christos H. Papadimitriou	7	184
+Jack Minker	3	45
+Rajeev Motwani	6	130
+Tomasz Imielinski	3	51
+Alex Strong	1	11
+Joachim Hammer	4	56
+Dallan Quass	2	38
+Piotr Indyk	5	96
+Narayanan Shivakumar	1	32
+Thomas G. Szymanski	2	21
+David Maier	7	192
+Moshe Y. Vardi	7	171
+Kelly Ireland	0	6
+Matthew M. Geller	0	5
+Alan J. Demers	5	82
+Arthur M. Keller	3	47
+Venky Harinarayan	0	5
+Peter Weiner	1	7
+Barbara Liskov	4	62
+Hector Garcia-Molina	7	231
+Laurent Vieille	1	15
+Ashish Gupta 0001	0	25
+Howard Trickey	0	6
+Abraham Silberschatz	5	121
+Anna R. Karlin	5	114
+Sam Toueg	3	43
+Kevin Karplus	3	40
+Athena Roussou	0	5
+Peter Buneman	4	73
+Aristides Gionis	5	93
+David S. Johnson	4	79
+Jim Gray	6	135
+Harry B. Hunt III	1	25
+Edith Cohen	1	46
+Yatin P. Saraiya	0	10
+Ramana Yerneni	0	23
+Paraschos Koutris	0	14
+Peter Rathmann	0	6
+Chen Li	6	147
+Marc A. Kaplan	0	28
+Average Neighbor Role:2.82051282051 Average Neighbor Degree:61.0854700855

@@ -1,0 +1,188 @@
+Author:Christos H. Papadimitriou
+Role:7 Degree:184
+Number of coauthors:184
+Witold Lipski Jr.	0	6
+Stephen A. Vavasis	2	26
+Ilan Adler	1	22
+Srinivasan Seshan	5	104
+M. R. Garey	1	37
+Xiaotie Deng	6	148
+Lefteris M. Kirousis	0	33
+Adam Kalai	0	40
+Georgios Kouroupas	0	3
+Erik D. Demaine	7	270
+H. T. Kung	5	86
+Vincent Mirelli	0	4
+Prabhakar Raghavan	6	122
+Gabriel M. Kuper	0	44
+Kenneth Steiglitz	2	39
+Luqun Ni	0	3
+Konstantinos Daskalakis	0	4
+Marco Barreno	0	15
+Vasilis Samoladas	0	15
+Éva Tardos	4	72
+Tiko Kameda	1	33
+Parikshit Gopalan	3	49
+Rafael M. Frongillo	1	14
+Vijay V. Vazirani	4	78
+Rahul Sami	1	38
+John N. Tsitsiklis	4	70
+Elchanan Mossel	4	61
+David Wolfe	0	6
+Deborah Goldman	0	7
+Tim Roughgarden	4	72
+Foto N. Afrati	4	69
+Henry A. Kautz	5	89
+Dimitris Papadias	5	87
+Aditya Akella	4	70
+Daniel P. Miranker	5	70
+Christian Borgs	5	73
+Jon M. Kleinberg	6	129
+Ryuhei Uehara	4	68
+Holger Moch	1	15
+Christopher A. Wilkens	0	5
+Aaron Archer	1	28
+Ivan Hal Sudborough	3	49
+Santosh Vempala	5	94
+Pierluigi Crescenzi	4	66
+John G. Kollias	0	12
+George Pierrakos	0	11
+Phokion G. Kolaitis	4	68
+Ilias Diakonikolas	2	30
+Srihari Sampath Kumar	0	8
+Serge Abiteboul	6	134
+Alejandro A. Schäffer	3	48
+Paul D. Seymour	4	75
+Stathis Zachos	2	19
+Jeffrey D. Ullman	5	117
+Olivier Bournez	3	42
+Hisao Tamaki	0	44
+Nimrod Megiddo	3	67
+Joseph S. B. Mitchell	7	180
+Antonio Piccolboni	1	14
+Fillia Makedon	6	125
+Alon Itai	1	49
+Thanasis Hadzilacos	2	24
+George Papageorgiou	1	23
+Michael Sipser	0	25
+Amin Saberi	3	70
+Pavel A. Pevzner	6	117
+Goran Gogic	0	4
+Paul W. Goldberg	3	52
+Gene Cheung	3	55
+Sophocles Ephremidis	0	2
+Vahab S. Mirrokni	6	123
+Yehoshua Sagiv	5	82
+Mihalis Yannakakis	2	90
+Yannis Dimopoulos	0	26
+Takehiro Ito	2	32
+Nicole Immorlica	5	87
+Joseph M. Hellerstein	6	157
+Vincent D. Blondel	5	65
+Ananth Rao	0	14
+Dimitris J. Kavvadias	1	22
+Ronald Fagin	5	96
+Alex Fabrikant	1	21
+Anant Jhingran	0	24
+Christos Amanatidis	0	8
+Philip A. Bernstein	5	129
+Ilias Foudalis	0	4
+Henry C. Lin	3	31
+Michael D. Hirsch	0	11
+Pascal Koiran	4	47
+Ion Stoica	6	173
+Olli-P. Kallioniemi	1	11
+Steven McCanne	2	39
+Alexander A. Razborov	0	40
+Umesh V. Vazirani	3	60
+Constantinos Daskalakis	2	38
+Martha Sideri	1	25
+Manuel Blum	1	59
+Alexander Hall	3	46
+S. Louis Hakimi	2	31
+Ellen B. Silverberg	0	1
+Ankur Luthra	0	4
+Nicholas J. A. Harvey	2	41
+Sorin Istrail	3	42
+Yaron Singer	1	14
+Rahul Savani	0	11
+Harry R. Lewis	0	10
+Shahar Dobzinski	1	23
+Erick Chastain	0	6
+Kamalika Chaudhuri	3	45
+Kenneth A. Ross	5	129
+Joan Feigenbaum	5	108
+Richard J. Lipton	6	133
+Feng Jiang	4	85
+Jeremy Elson	2	32
+Catherine C. McGeoch	0	19
+Lucian Popa 0002	0	28
+Georgios I. Papadimitriou	3	37
+Alfred V. Aho	1	53
+Yannis E. Ioannidis	6	127
+Scott Shenker	7	231
+Yushi Uno	2	30
+Evdokia Nikolova	0	19
+Afshin Rostamizadeh	0	11
+Bart Selman	4	83
+Adam Tauman Kalai	1	44
+Byung-Gon Chun	3	50
+Hoeteck Wee	2	47
+Elias Dahlhaus	0	35
+Paris C. Kanellakis	1	36
+Kamal Jain	5	91
+Jon Louis Bentley	3	46
+Paolo Serafini	0	13
+Vangelis Magirou	0	4
+Marco A. Casanova	6	106
+Pierre A. Humblet	2	26
+Moshe Y. Vardi	7	171
+Kunal Talwar	4	73
+Aranyak Mehta	0	36
+Michael Schapira	3	47
+John Kubiatowicz	5	89
+Michelangelo Grigni	1	29
+George F. Georgakopoulos	0	6
+Jayme Luiz Szwarcfiter	5	83
+Michal Feldman	3	51
+Amos Fiat	5	101
+Anthony Spatharis	0	5
+P. Venkat Rangan	4	46
+Victor Vianu	0	62
+Yannis Manolopoulos	5	98
+Jennifer T. Chayes	4	74
+Nadia Papakostantinou	0	4
+Samuel R. Buss	3	41
+Andrea S. Lapaugh	0	1
+Oded Goldreich	6	116
+Srinivas Ramanathan	1	10
+Georg Gottlob	6	138
+Ellen B. Feinberg	0	1
+Esther M. Arkin	4	81
+David Ratajczak	0	13
+Elitza N. Maneva	0	15
+Zhi-Zhong Chen	2	41
+Adi Livnat	0	3
+Robert Kleinberg	3	56
+S. Rao Kosaraju	0	43
+Vladlen Koltun	2	52
+Nikhil R. Devanur	1	42
+John Chuang	2	33
+Athena Roussou	0	5
+Milena Mihail	0	39
+Dan Suciu	6	127
+Moshe Babaioff	0	37
+Michael Rodeh	2	37
+David S. Johnson	4	79
+Richard M. Karp	7	179
+Richard Desper	0	10
+Madhu Sudan	4	103
+Oliver Vornberger	2	30
+Avi Wigderson	6	130
+Xanthippi Markenscoff	0	2
+Shmuel Safra	0	37
+David M. Mount	4	62
+Elias Koutsoupias	2	41
+Gregory Valiant	0	17
+Stavros S. Cosmadakis	1	20
+Average Neighbor Role:2.39673913043 Average Neighbor Degree:53.6684782609
