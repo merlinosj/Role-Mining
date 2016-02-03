@@ -1,0 +1,17 @@
+Author:Nikolaj Tatti
+Role:1 Degree:13
+Number of coauthors:13
+Michael Mampaey	1	8
+Jilles Vreeken	1	17
+Kai Puolamäki	2	20
+Heikki Mannila	6	120
+Bart Goethals	3	43
+Sami Hanhijärvi	0	6
+Markus Ojala	0	9
+Niko Vuokko	1	9
+Hannes Heikinheimo	0	8
+Taneli Mielikäinen	3	36
+Aristides Gionis	5	93
+Fabian Moerchen	2	19
+Boris Cule	0	5
+Average Neighbor Role:1.84615384615 Average Neighbor Degree:30.2307692308
