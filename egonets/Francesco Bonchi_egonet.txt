@@ -1,0 +1,71 @@
+Author:Francesco Bonchi
+Role:4 Degree:67
+Number of coauthors:67
+Alessio Mazzanti	0	3
+Salvatore Orlando	4	57
+Roberto Trasarti	0	22
+Gianni Mainetto	0	12
+Franco Maria Nardini	2	27
+Wendy Hui Wang	2	22
+George Kollios	2	62
+Björn Bringmann	0	14
+Michael Mathioudakis	0	9
+Michele Curcio	0	5
+Fabrizio Scatena	0	5
+Amit Goyal 0002	0	5
+Debora Donato	2	47
+Fosca Giannotti	5	78
+Manos Papagelis	1	16
+Arno Siebes	3	46
+Berkant Barla Cambazoglu	3	53
+Antti Ukkonen	1	16
+Bradley Malin	4	56
+Rossano Venturini	0	16
+Ingmar Weber	4	53
+Yoëlle S. Maarek	1	43
+Ida Mele	0	6
+Mirco Nanni	1	29
+Matthijs van Leeuwen	1	18
+Byung-Won On	2	32
+Michele Berlingerio	2	25
+Dino Pedreschi	5	79
+Alejandro Jaimes	5	85
+Francesco Gullo	1	15
+Guillermo Garrido	1	10
+Dino Ienco	1	26
+Carlos Castillo	4	62
+Roman Yarovoy	0	3
+David F. Gleich	2	25
+Gianmarco De Francisci Morales	0	11
+Claudio Lucchese	3	37
+Vincent Leroy	0	19
+Osman Abul	3	29
+Laks V. S. Lakshmanan	6	120
+Themis Palpanas	4	62
+Mikalai Tsytsarau	0	4
+Bart Goethals	3	43
+Ophir Frieder	6	141
+Fabrizio Silvestri	5	69
+Giuseppe Manco	3	36
+Aristides Gionis	5	93
+Paolo Boldi	0	32
+Nicola Barbieri	0	8
+Yücel Saygin	4	71
+Sebastiano Vigna	2	30
+Pooya Esfandiar	1	8
+Tom Chi	0	4
+Chen Greif	1	23
+Maurizio Atzori	0	15
+Michalis Potamias	0	21
+Stefano Bistarelli	3	54
+Börkur Sigurbjörnsson	1	16
+Cristian Gozzi	0	7
+Silvia Chelazzi	1	5
+Tamir Tassa	2	23
+Franco Turini	4	62
+Salvatore Ruggieri	2	34
+Raffaele Perego	5	67
+Chiara Renso	3	41
+Hossein Vahabi	0	9
+Ilaria Bordino	1	22
+Average Neighbor Role:1.89552238806 Average Neighbor Degree:34.2985074627

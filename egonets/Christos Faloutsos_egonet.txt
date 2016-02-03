@@ -1,0 +1,335 @@
+Author:Christos Faloutsos
+Role:8 Degree:331
+Number of coauthors:331
+Dragutin Petkovic	3	49
+U. Kang	1	22
+Vikrant Kobla	0	4
+Divesh Srivastava	7	196
+Brian Murphy	2	30
+George Panagopoulos	0	1
+Srinivasan Seshan	5	104
+Guido Proietti	2	36
+Stratos Papadomanolakis	1	22
+Yasushi Sakurai	1	35
+Didi Surian	0	7
+Yi Zhou	6	165
+Theodore Johnson	4	74
+Eno Thereska	3	39
+Myron Flickner	2	39
+Hui Zhang	9	634
+Jernej Barbic	0	13
+Nicholas Valler	0	10
+Catherine Plaisant	6	134
+Euripides G. M. Petrakis	3	34
+Frederick Eberhardt	0	7
+Mukund Seshadri	0	11
+Joel H. Saltz	7	208
+Masashi Yamamuro	3	34
+Philip Koopman	3	31
+Robert Laurini	4	61
+Arnab Bhattacharya	3	38
+Duen Horng Chau	2	30
+Jialie Shen	2	71
+Peter Triantafillou	4	54
+Vasileios Megalooikonomou	4	71
+Gary L. Miller	5	84
+Carey Nachenberg	0	4
+Michalis Faloutsos	6	105
+Yufei Tao	4	84
+Mitchell J. Small	0	6
+Xiaogang Xue	0	4
+Raphael Chan	0	1
+Jie Liu	8	414
+Brent Agnew	0	6
+Partha Pratim Talukdar	3	42
+Pedro Olmo Vaz de Melo	0	2
+Claudia Plant	3	35
+Pedro O. S. Vaz de Melo	0	11
+Ching-Yung Lin	5	96
+David Lo	5	95
+Donald J. Welch	1	11
+Volker Gaede	0	10
+Zhongfei Zhang	3	62
+Ngai Hang Chan	1	8
+Yang Wang 0008	1	11
+Robert F. Murphy	4	61
+Alon Y. Levy	0	53
+Fernanda Balem	0	4
+Markus G. Anderle	0	6
+Zenon Protopapas	1	10
+Vebjorn Ljosa	0	14
+Jon M. Kleinberg	6	129
+Hahn-Ming Lee	5	83
+Kevin S. McCurley	2	29
+Orna Raz	1	17
+Mengzhi Wang	0	8
+B. Aditya Prakash	2	30
+Roberto F. Santos Filho	0	4
+Adam Wright	4	52
+Ahmed Metwally	1	9
+Alex Beutel	0	7
+Misael Mongiovì	2	16
+Zhen Guo	1	32
+Lei Li	8	345
+Krishna Kumaraswamy	1	7
+Evangelos E. Papalexakis	1	15
+Angeline Wong	0	3
+Tina Eliassi-Rad	3	44
+Gunhee Kim	2	27
+Guo Li	3	40
+Natalie S. Glance	3	34
+Carlos Guestrin	4	87
+Rebecca B. Buchheit	0	7
+Elisângela Botelho	0	6
+Jimeng Sun	5	96
+Nick Roussopoulos	4	73
+J. Vandenbroeck	0	7
+Philip S. Yu	8	377
+Jiri Schindler	3	27
+Hsing-Kuo Kenneth Pao	1	10
+P. Economopoulos	0	8
+Nancy S. Pollard	4	47
+Tamara G. Kolda	3	37
+Kensuke Onuma	0	5
+Yasuko Matsubara	1	7
+Xindong Wu	7	190
+Tom M. Mitchell	6	114
+Dimitris N. Metaxas	7	195
+Marko Grobelnik	3	41
+Qiang Wang	8	372
+Christian Böhm	4	65
+Jure Leskovec	4	73
+Timos K. Sellis	6	111
+Anitha Kannan	1	37
+Alexandros Labrinidis	3	51
+Chi-Dong Chen	0	4
+Eirinaios Michelakis	0	15
+Sunju Park	3	33
+Huiming Qu	0	14
+Hyung-Jeong Yang	2	19
+Wayne Niblack	3	33
+Ioannis Koutis	1	15
+Virgílio A. F. Almeida	5	79
+Daryl Pregibon	1	24
+Roni Rosenfeld	4	52
+Michaela Goetz	0	3
+Steven W. Schlosser	2	25
+Kai Ren	0	12
+Carson C. Woo	2	32
+Masatoshi Yoshikawa	5	84
+Tom Minka	2	21
+D. Lee	4	68
+Yehuda Koren	2	34
+Nobuhiro Yugami	1	8
+Tomoharu Iwata	3	42
+Yinglian Xie	0	42
+Larry A. Wasserman	3	33
+David M. Steier	1	21
+Ramakrishnan Srikant	3	32
+Chieh-Jan Mike Liang	1	22
+Martial Hebert	6	123
+John Chien-Han Tseng	0	2
+James McCann	0	4
+Yannis Kotidis	2	35
+Edoardo Airoldi	0	15
+Wenyao Ho	0	3
+Soon-Hyoung Kwon	0	4
+Nicholas D. Sidiropoulos	4	50
+Dacheng Tao	6	194
+Ana Paula Appel	1	18
+Sang-Wook Kim	6	137
+Dimitris Papadias	5	87
+Risto A. Väisänen	0	5
+Joon Ho Lee	2	18
+Jeanne M. VanBriesen	1	10
+Nikolaos Sidiropoulos	1	14
+Siyuan Liu	0	44
+Asim Smailagic	5	93
+Mark R. Verardo	0	6
+David Andersen	0	4
+Hao Wang	9	547
+Stephen J. Maybank	3	67
+Ilari Shafer	0	6
+Bin Fu	5	89
+Christopher W. Clifton	0	4
+Sridhar Machiraju	1	19
+Brendan Meeder	0	15
+Zhongfei (Mark) Zhang	3	51
+David Jensen	4	64
+Bin Liu 0002	0	11
+Min-Hee Jang	1	15
+Jean Bolot	0	22
+Charalampos E. Tsourakakis	1	23
+Scott Faro	2	13
+Dharmendra S. Modha	3	37
+Hanghang Tong	4	75
+Garth A. Gibson	5	84
+Dunja Mladenic	4	52
+Bin Zhang 0014	0	7
+David S. Doermann	5	103
+Elaine P. M. de Sousa	2	19
+Alexandros Biliris	1	30
+Andreas Terzis	5	92
+Michele Berlingerio	2	25
+Mary McGlohon	0	13
+Jim Hafner	0	15
+Rosalynn Chong	0	3
+Winston Rego	0	1
+Alberto Belussi	2	29
+Michael Barnathan	0	13
+Caetano Traina Jr.	6	106
+Deepayan Chakrabarti	0	41
+Sebastian Thrun	7	181
+Leejay Wu	0	10
+Yoshiharu Ishikawa	3	39
+M. Ranganathan	1	15
+Eric P. Xing	5	120
+Shashank Pandit	0	11
+Stavros Christodoulakis	5	77
+Jeffrey Wilhelm	0	5
+Jia-Yu Pan	1	27
+Nick Koudas	5	119
+Ashwin Sridharan	0	26
+Marcos R. Vieira	1	20
+Samuel Wang	0	3
+Guoqiang Shan	0	4
+Kenneth A. Ross	5	129
+Roberto J. Bayardo Jr.	2	20
+Gueorgi Kossinets	0	16
+Jason I. Hong	5	107
+Keith Henderson	0	11
+Pravin Bhagwat	1	16
+Fan Guo	2	23
+Maria Camila Nardini Barioni	0	13
+Chao Liu 0001	0	31
+José Fernando Rodrigues Jr.	2	19
+Julio López	4	54
+Costas Georgiadis	0	3
+Patrick E. O'Neil	3	43
+Andreas Krause	5	90
+Duck-Ho Bae	0	9
+Daniel P. Siewiorek	7	199
+Leman Akoglu	2	18
+Agma J. M. Traina	5	85
+Alla Safonova	1	22
+Mary Shaw	5	80
+Feroze B. Mohamed	1	9
+Ki-Nam Kim	0	5
+Evan Hoke	0	6
+Chih-Chen Lin	0	5
+Pinar Duygulu	3	41
+Rakesh Agrawal	6	149
+Adriano S. Arantes	0	7
+Cui Zhu	0	3
+Ben Shneiderman	8	329
+William Equitz	0	12
+Yanjun Qi	1	35
+Byoung-Kee Yi	2	25
+Hsing-Kuo Pao	1	17
+Shari Roseman	0	1
+Ron Barber	2	18
+Anil Kumar	6	100
+Padhraic Smyth	5	102
+Ching-Hao Mao	3	30
+Danai Koutra	0	9
+Antonio Alfredo Ferreira Loureiro	6	134
+Bai Wang	4	60
+Anastassia Ailamaki	4	97
+Katia P. Sycara	7	179
+Brian Gallagher	1	28
+Tara M. Madhyastha	2	20
+Alan L. Montgomery	0	4
+Aniket Kittur	4	56
+Suman Nath	4	65
+Gregory R. Ganger	5	95
+Ziv Bar-Joseph	3	54
+King-Ip Lin	2	43
+Flip Korn	0	47
+Hani Jamjoom	0	38
+Ralf Rantzau	2	26
+Sylvie Servigne	2	28
+Yihong Gong	3	73
+Eric Simon	4	67
+Michael J. Taylor	0	25
+Chenxi Wang	2	41
+Leo Mark	3	47
+Jilles Vreeken	1	17
+Bernhard Seeger	5	75
+Jessica K. Hodgins	6	129
+Petros Faloutsos	4	45
+Phillip B. Gibbons	5	100
+Dimitris Margaritis	1	16
+Yi Rong	0	1
+Ee-Peng Lim	7	196
+Petros Drineas	2	44
+Myoung-Ah Kang	1	16
+Tai-You Ke	0	5
+John D. Strunk	1	23
+Zoubin Ghahramani	6	137
+Raymond Lee	0	7
+Spiros Papadimitriou	1	45
+Zhiqiang Bi	0	11
+Wenjie Fu	1	10
+Victor Vianu	0	62
+Yannis Manolopoulos	5	98
+Nan Du	3	48
+Junichi Shigezumi	0	5
+Heikki Mannila	6	120
+Xuelong Li	6	147
+Ibrahim Kamel	2	47
+Judith Klein-Seetharaman	3	32
+Georgos Siganos	1	19
+Yoshihisa Abe	1	7
+Ravishankar Subramanya	0	2
+Andrew Tomkins	5	90
+Gerhard Weikum	7	233
+Stephen Bay	0	6
+H. V. Jagadish	6	181
+Xuetao Wei	1	31
+Nian Liu	0	19
+Robson Leonardo Ferreira Cordeiro	0	9
+David Nagle	2	28
+Dennis Tsichritzis	3	46
+Raymond T. Ng	5	101
+Jerry Kiernan	1	29
+Jure Ferlez	0	4
+Vassilis J. Tsotras	4	68
+Jiwoon Ha	1	7
+Arun N. Swami	1	19
+Terry R. Payne	4	91
+Vishnu Naresh Boddeti	1	11
+Eliot L. Siegel	3	35
+Fragkiskos D. Malliaros	0	4
+Kinman Au	0	5
+Koji Maruhashi	0	12
+Hiroyuki Kitagawa	6	116
+Bernd-Uwe Pagel	1	8
+Razvan Ranca	0	5
+Se-Mi Hwang	0	3
+Aristides Gionis	5	93
+Lionel M. Ni	7	202
+Petko Bogdanov	0	6
+Panayiotis Tsaparas	0	46
+Ravi Kumar	6	151
+A. Lee	2	27
+Bongki Moon	4	60
+Yi Min Wang	0	6
+Todd C. Mowry	4	58
+Iulian Neamtiu	3	38
+Anthony Brockwell	0	8
+Brent Bryan	1	10
+Humberto Luiz Razente	1	15
+Paul S. Fischbeck	0	7
+Minglong Shao	0	16
+Alexander Tuzhilin	2	48
+Yiping Zhan	0	3
+Matthew Hurst	2	33
+Zheng Lin	0	15
+Erik Riedel	0	34
+Zhengyu Wang	2	15
+André G. R. Balan	0	10
+Agma Juci Machado Traina	3	30
+Christopher R. Palmer	0	16
+Masafumi Hamamoto	0	3
+Ambuj K. Singh	5	82
+Average Neighbor Role:2.29003021148 Average Neighbor Degree:52.0634441088
