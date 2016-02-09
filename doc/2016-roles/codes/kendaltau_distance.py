@@ -2,6 +2,8 @@ import sys
 import operator
 import scipy.stats as stats
 from copy import deepcopy
+import numpy as np
+
 i_filename = sys.argv[1]
 res_filename = sys.argv[2]
 f = open(i_filename, 'r+')
@@ -49,8 +51,10 @@ for keys in role_list:
   avg_degree[keys] = deg_sum/float(len(nodes))
 #print avg_degree
 sorted_role = sorted(avg_degree.items(), key=operator.itemgetter(1))
+#print sorted_role
+
 z = zip(*sorted_role)
-sorted_role_list = list(z[0])
+sorted_role_list = np.argsort(list(z[0]))
 #print sorted_role_list
 #sl =[8]
 #for x in sorted_role_list:
@@ -67,8 +71,12 @@ for keys in role:
 #print degree_list
 x = list(role1.values())
 y = list(degree_list.values())
-#print x
-#print y
+#print role
+#print role1
+#print np.mean([degree_list[z] for z in role1 if role1[z] == 0])
+#print np.mean([degree_list[z] for z in role1 if role1[z] == 1])
+#print np.mean([degree_list[z] for z in role1 if role1[z] == 2])
+#print np.mean([degree_list[z] for z in role1 if role1[z] == 3])
 tau, p_value = stats.kendalltau(x, y)
 print 'TAU:',tau
 print 'P_VALUE:',p_value
