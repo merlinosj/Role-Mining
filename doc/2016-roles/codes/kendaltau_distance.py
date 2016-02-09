@@ -60,11 +60,12 @@ sorted_role_list = list(z[0])
 #sorted_role_list.append(3)
 #sorted_role_list = deepcopy(sl)
 print sorted_role_list
+role1 = deepcopy(role)
 for keys in role:
-  role[keys]=sorted_role_list[role[keys]]
+  role1[keys]=sorted_role_list[role[keys]]
 #print role
 #print degree_list
-x = list(role.values())
+x = list(role1.values())
 y = list(degree_list.values())
 #print x
 #print y
