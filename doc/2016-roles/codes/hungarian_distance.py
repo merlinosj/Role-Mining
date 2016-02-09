@@ -16,20 +16,20 @@ for record in f:
     role = int(record[1])
     role_sets1.setdefault(role,set()).add(node)
 
-#For Rolx Result    
+'''#For Rolx Result    
 with open(filename2) as f1:
   lines = f1.read().split(',')
 for i in xrange(len(lines)):
-    role_sets2.setdefault(int(lines[i]),set()).add(i)
+    role_sets2.setdefault(int(lines[i]),set()).add(i)'''
  
 
-'''#For non Rolx Result   
+#For non Rolx Result   
 f = open(filename2, 'r+')
 for record in f:
     record= record.strip().split('\t')
     node = int(record[0])
     role = int(record[1])
-    role_sets2.setdefault(role,set()).add(node)'''
+    role_sets2.setdefault(role,set()).add(node)
 
 A = [
   [nodecount for i in xrange(rolecount)] 
