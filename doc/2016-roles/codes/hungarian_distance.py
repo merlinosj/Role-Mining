@@ -1,6 +1,8 @@
 import sys
 import operator
 import scipy.stats as stats
+import scipy
+import numpy
 from copy import deepcopy
 from munkres import Munkres
 filename1 = sys.argv[1]
@@ -31,6 +33,9 @@ for record in f:
     role = int(record[1])
     role_sets2.setdefault(role,set()).add(node)
 
+print role_sets1
+print role_sets2
+
 A = [
   [nodecount for i in xrange(rolecount)] 
     for j in xrange(rolecount)
@@ -44,6 +49,8 @@ for i in xrange(rolecount):
       absThing = 0 
      
      A[i][j] -= absThing
+
+print nodecount - numpy.matrix(A)
      
 m = Munkres()
 indexes = m.compute(A)
