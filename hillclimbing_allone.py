@@ -1,7 +1,7 @@
 '''Syntax to run the file:
-  python hillclimbing.py <Input_file_name> <Output_file_name> <no_of_nodes> <no_of_roles>
+  python hillclimbing.py <Input_file_name> <no_of_roles>
 Example:
- python hillclimbing.py 34.txt 6_out.txt 34 4
+ python hillclimbing.py karate_directed.txt 4
 '''
 import sys
 import numpy as np
@@ -44,15 +44,11 @@ def centroid_update(candidate,role_median,role_vector_length,neighbor_role_vecto
                         neighbor_roles.add(role[j])
                 for neighbor_role in neighbor_roles:
                         role_median[neighbor_role] = compute_centroid(neighbor_role, sigma, role_vector_length)
-                        #role_median[neighbor_role] = sigma[neighbor_role] / float(role_vector_length[neighbor_role])
-        #print role_median
         return role_median
 
 '''Centroid Calculation for all the roles using the profiles of the nodes'''
 def centroid_calculation(role_vector,neighbor_role_vector, no_roles):
-        #print 'IN CENTROID FUNCTION'
         role_median = [None] * no_roles
-        #role_median = [[0 for j in xrange(no_roles)] for i in xrange(no_roles)]
         for key in role_vector:
                 role_candidates = role_vector[key]
                 median_vector = []
@@ -65,9 +61,7 @@ def centroid_calculation(role_vector,neighbor_role_vector, no_roles):
         return role_median
       
 def sigma_calculation(role_vector,neighbor_role_vector,no_roles):
-        #print 'IN CENTROID FUNCTION'
         global sigma
-
         for key in role_vector:
                 role_candidates = role_vector[key]
                 median_vector = []
@@ -84,7 +78,6 @@ def sigma_calculation(role_vector,neighbor_role_vector,no_roles):
 def role_population(role,node_count,no_roles,role_vector):
         global neighbor_nodes,sigma
         neighbor_role_vector = np.zeros((node_count,no_roles))
-        #neighbor_role_vector = [[0 for j in xrange(no_roles)] for i in xrange(node_count)]
         for key in  neighbor_nodes:
                 neighbors = neighbor_nodes[key]
                 for j in xrange(len(neighbors)):
@@ -99,9 +92,7 @@ def role_update(candidate,candidate_old_role,candidate_new_role,neighbor_role_ve
         global predecessor_nodes,sigma
         if candidate in predecessor_nodes:
                 neighbors = predecessor_nodes[candidate]
-
                 for j in neighbors:
-                        #print 'PREDECESSOR:',j,role[j]
                         neighbor_role = role[j]
                         sigma[neighbor_role][candidate_old_role] -=  1
                         sigma[neighbor_role][candidate_new_role] +=  1
@@ -119,13 +110,10 @@ def F_calculation_new(neighbor_role_vector,role,role_median,node_count):
         return distance
 
 '''The main function that reads the graph and calls functions to develop profiles and use them for clustering'''
-
 def hill_climbing(fname,no_roles):
         global neighbor_nodes,predecessor_nodes,sigma
         f = open(fname, 'r+')
         fromNode = []
-        #sigma = [[0 for j in xrange(no_roles)] for i in xrange(no_roles)]
-        #edgeList = []
         flag1 = 0
         flag2 = 0
         cnt = 0
@@ -151,10 +139,8 @@ def hill_climbing(fname,no_roles):
                   else:
                         src_node = int(record[0])
                         dst_node = int(record[1])
-                  #edgeList.append((int(record[0]),int(record[1])))
                   fromNode.append(src_node)
                   neighbor_nodes.setdefault(src_node,[]).append(dst_node)
-                  #neighbor_nodes.setdefault(dst_node,[]).append(src_node)
                   predecessor_nodes.setdefault(dst_node,[]).append(src_node)
 
         print 'Reading File is done...'
@@ -164,32 +150,12 @@ def hill_climbing(fname,no_roles):
         for x in a:
           degrees[int(x[0])]=x[1]
         degree_set = set(degrees.values())
-        #print 'degree_set',degree_set
         degree_numpy = np.array(degrees.values())
         print 'Degree Calculation done...'
         window_size = len(degree_set)/no_roles
         if len(degree_set)/float(no_roles) > window_size:
                 window_size += 1
-        #print 'window_size',window_size
-        role = [1 for i in xrange(node_count)]
-        '''i = 0
-        range_count = 1
-        for degree in degree_set:
-          ind = np.where(degree_numpy == degree)[0]
-          
-          for element in ind:
-                  role[element] = i
-          #print i,range_count,degree
-          if range_count == window_size:
-                i += 1
-                range_count = 0
-          range_count += 1'''
-          
-        #print 'Role Assignment based on degree is done... '
-        '''for m in xrange(node_count):
-                if m not in role:
-                  role[m] = 0'''
-        #no_roles = len(set(role.values()))
+        role = [0 for i in xrange(node_count)]
         role_vector = defaultdict(list)
         role_vector_length = defaultdict(int)
 
@@ -205,22 +171,14 @@ def hill_climbing(fname,no_roles):
         iteration = 1
         node_list = [i for i in xrange(node_count)]
         flag = True
-        #print 'Iteration: ',iteration
-        #inner_iteration = 1
         distance = 0
         node_list_count = node_count
         while flag:
                 print 'Iteration: ',iteration
-                #print 'TIME:',time.time()
                 beg = time.time()
                 no_change_counter = 0
                 #candidate_count = 0
                 for candidate in node_list:
-                        '''if int(candidate)%100000 == 0:
-                                print 'Candidate is:',candidate
-                                #print 'DISTANCE:',distance
-                                print time.time()'''
-                        #print 'Candidate is:',candidate
                         max_gain = 0
                         max_gain_role_ind = -1
                         old_role = role[candidate]
@@ -242,17 +200,10 @@ def hill_climbing(fname,no_roles):
                                 #print 'NEW ROLE:',new_role,old_role
                                 role[candidate] = new_role
                                 if new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
-                                                #print 'NEW ROLE:',new_role,old_role
-                                                #print len(sigma)
                                         role_vector_length[old_role] -= 1
                                         role_vector_length[new_role] += 1
                                         sigma[old_role] -= neighbor_role_vector[candidate] 
                                         sigma[new_role] += neighbor_role_vector[candidate]
-                                        #Intermediate Centroid Calculation.
-                                        #role_median_temp = {}
-                                        #role_median_temp[old_role]=role_median[old_role]
-                                        #role_median_temp[new_role]=role_median[new_role]
-                                        #intermediate_median = intermediate_median_calculation(candidate,old_role,new_role,role_median_temp,role_vector_length,neighbor_role_vector)
                                         intermediate_old = compute_centroid(old_role, sigma, role_vector_length)
                                         intermediate_new = compute_centroid(new_role, sigma, role_vector_length)
 
@@ -263,19 +214,6 @@ def hill_climbing(fname,no_roles):
                                         intermediate_centroid_new = intermediate_new.dot(intermediate_new) 
                                         old_centroid_new = role_median[new_role].dot(role_median[new_role])
                                         A =  c_old*old_centroid_old - (c_old-1)*intermediate_centroid_old + c_new*old_centroid_new - (c_new+1)*intermediate_centroid_new
-
-                                        #B_w Calculation
-                                        #dl = defaultdict(int) #Will hold all the predecessors role counts
-                                        #B_w = 0
-                                        #if candidate in predecessor_nodes:
-                                                #for node in predecessor_nodes[candidate]:
-                                                        #node_old_role = role[node]
-                                                        #pw_i = neighbor_role_vector[node][old_role]
-                                                        #pw_j = neighbor_role_vector[node][new_role]
-                                                        #B_w += 2*pw_i - 2*pw_j - 2
-                                                        #dl[node_old_role] += 1 
-                                        #print 'B_w:',B_w
-                                        #print 'DL VALUE IS:',dl
                                         B_w = 2*pw[old_role] - 2*pw[new_role] - 2*pred_count
 
                                         #R_L Calculation
@@ -307,47 +245,30 @@ def hill_climbing(fname,no_roles):
 
 
                         if max_gain_role_ind <> -1:
-                          #print 'Optimal Gain for ',candidate,' moving from ',old_role,' to ',max_gain_role_ind,' is ',max_gain
                           role[candidate] = max_gain_role_ind
                           role_vector_length[old_role] -= 1
                           role_vector_length[max_gain_role_ind] += 1
 
                           sigma[old_role] -= neighbor_role_vector[candidate]
                           sigma[max_gain_role_ind] += neighbor_role_vector[candidate]
-
-                          #sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
-                          #sigma[max_gain_role_ind] = map(add, sigma[max_gain_role_ind], neighbor_role_vector[candidate])                         
+                       
                           neighbor_role_vector = role_update(candidate,old_role,max_gain_role_ind,neighbor_role_vector,role)
-                          #Actual Function that updates centroid of the node and its predecessors. Commented out now for debugging and all role centroid calculation is used for debugging purpose
-
-                          #role_median=centroid_calculation(role_vector,neighbor_role_vector) #All Role Centroid Calculation
                           role_median = centroid_update(candidate,role_median,role_vector_length,neighbor_role_vector,role,old_role,max_gain_role_ind)                    
                              
                           
                         else:
-                          #print 'NO CHANGE IN ROLE FOR NODE',candidate
-                          #idle[candidate] += 1
                           no_change_counter += 1
                           
 
                 iteration += 1
-                #print 'Number of candidates',node_list_count
-                #print 'node_list_count',node_list_count
-                #print 'no_change_counter',no_change_counter
-                '''if node_list_count == 0:
-                        flag = False'''
+
                 if no_change_counter == node_count:
                         flag = False
-                #print 'NODES UNCHANGED:',no_change_counter
-
                 print 'TIME SPENT:',time.time() - beg
-                #iteration += 1
                 distance=F_calculation_new(neighbor_role_vector,role,role_median,node_count)
                 print 'DISTANCE:',distance
                 print 'NODES UNCHANGED:',no_change_counter
-                #print 'TIME:',time.time()
         print 'Final Distance:',distance
-        #print 'Final Role:',role
         return node_count,role,distance,iteration-1,flag2
 
 
@@ -357,7 +278,7 @@ no_roles = int(sys.argv[2])
 file_name = basename(i_filename).split('.')[0]
 print file_name
 stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
-output_filename = 'output/'+file_name +'_hill_output_1.txt'
+output_filename = 'output/'+file_name +'_hill_output.txt'
 st_time = time.time()
 node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles)
 end_time = time.time()
