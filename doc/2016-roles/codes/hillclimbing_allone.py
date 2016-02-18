@@ -1,7 +1,7 @@
 '''Syntax to run the file:
-  python hillclimbing.py <Input_file_name> <no_of_roles>
+  python hillclimbing_init2.py <Input_file_name> <no_of_roles>
 Example:
- python hillclimbing.py karate_directed.txt 4
+ python hillclimbing_init2.py karate_directed.txt 4
 '''
 import sys
 import numpy as np
@@ -14,7 +14,7 @@ neighbor_nodes = {}
 predecessor_nodes = {}
 sigma = {}
 
-
+'''This computes centroids by using sigma(sum of neighbor role vector)'''
 def compute_centroid(role, sigma, role_vector_length):
         if role_vector_length[role] == 0:
                 return np.zeros(len(sigma[role]))
@@ -59,7 +59,7 @@ def centroid_calculation(role_vector,neighbor_role_vector, no_roles):
           if key not in role_vector.keys():
             role_median[key] = np.zeros(no_roles)
         return role_median
-      
+'''Sum of neigbor role vector is calculated for each role. This is calculated once and is updated by add/subtract when a node is moved from one role to another'''        
 def sigma_calculation(role_vector,neighbor_role_vector,no_roles):
         global sigma
         for key in role_vector:
@@ -272,47 +272,40 @@ def hill_climbing(fname,no_roles):
         return node_count,role,distance,iteration-1,flag2
 
 
+'''Main part that takes input arguments, calls the functions and writes the final output to files'''
+if __name__ == '__main__':
 
-i_filename = sys.argv[1]
-no_roles = int(sys.argv[2])
-file_name = basename(i_filename).split('.')[0]
-print file_name
-stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
-output_filename = 'output/'+file_name +'_hill_output.txt'
-st_time = time.time()
-node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles)
-end_time = time.time()
-with open(stats_filename,'ab') as outfile:
-        text = 'FILE NAME: '+str(file_name)+'\n'
-        outfile.write(text)
-        text = 'NODE COUNT: '+str(node_count)+'\n'
-        outfile.write(text)
-        text = 'ROLE COUNT: '+str(no_roles)+'\n'
-        outfile.write(text)
-        text = 'ITERATIONS: '+str(iteration)+'\n'
-        outfile.write(text)
-        text =  'FINAL DISTANCE: '+ str(score)+'\n'
-        outfile.write(text)
-        text = 'START TIME: '+ str(st_time)+'\n'
-        outfile.write(text)
-        text = 'END TIME: '+ str(end_time)+'\n'
-        outfile.write(text)
-        total_time = end_time - st_time
-        text = 'TOTAL TIME: '+ str(total_time)+'\n'
-        outfile.write(text)
-with open(output_filename,'wb') as outfile:
-  for key in xrange(len(roles_final)):
-    if flag == 1:
-      text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
-    else:
-      text = str(key) +'\t' +str(roles_final[key]) +'\n'
-    outfile.write(text)
-  
-'''roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)
-colors = ['red','green','blue','yellow','cyan','orange','brown','white','purple','pink','coral','violet','gold','plum','lightgreen']
-#print colors
-with open(o_filename,'ab') as outfile:
-        for i in xrange(no_nodes):
-                text = str((i+1))+' [style = \"filled\" color= \"' + colors[roles_final[i]] + '\"];\n'
-                outfile.write(text)
-        outfile.write('}')'''
+  i_filename = sys.argv[1]
+  no_roles = int(sys.argv[2])
+  file_name = basename(i_filename).split('.')[0]
+  print file_name
+  stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
+  output_filename = 'output/'+file_name +'_hill_output.txt'
+  st_time = time.time()
+  node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles)
+  end_time = time.time()
+  with open(stats_filename,'ab') as outfile:
+	  text = 'FILE NAME: '+str(file_name)+'\n'
+	  outfile.write(text)
+	  text = 'NODE COUNT: '+str(node_count)+'\n'
+	  outfile.write(text)
+	  text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	  outfile.write(text)
+	  text = 'ITERATIONS: '+str(iteration)+'\n'
+	  outfile.write(text)
+	  text =  'FINAL DISTANCE: '+ str(score)+'\n'
+	  outfile.write(text)
+	  text = 'START TIME: '+ str(st_time)+'\n'
+	  outfile.write(text)
+	  text = 'END TIME: '+ str(end_time)+'\n'
+	  outfile.write(text)
+	  total_time = end_time - st_time
+	  text = 'TOTAL TIME: '+ str(total_time)+'\n'
+	  outfile.write(text)
+  with open(output_filename,'wb') as outfile:
+    for key in xrange(len(roles_final)):
+      if flag == 1:
+	text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
+      else:
+	text = str(key) +'\t' +str(roles_final[key]) +'\n'
+      outfile.write(text)
