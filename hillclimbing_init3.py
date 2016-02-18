@@ -1,7 +1,7 @@
 '''Syntax to run the file:
-  python hillclimbing_init2.py <Input_file_name> <no_of_roles> <threshold_size>
+  python hillclimbing_init3.py <Input_file_name> <no_of_roles> <threshold_size>
 Example:
- python hillclimbing_init2.py karate_directed.txt 4 5
+ python hillclimbing_init3.py karate_directed.txt 4 5
 '''
 import sys
 import numpy as np
@@ -10,6 +10,7 @@ from collections import defaultdict,OrderedDict,Counter
 import time
 from operator import sub,add
 from os.path import basename
+import random
 neighbor_nodes = {}
 predecessor_nodes = {}
 sigma = {}
@@ -156,10 +157,7 @@ def hill_climbing(fname,no_roles,threshold):
 	degree_set = set(degrees.values())
 	degree_numpy = np.array(degrees.values())
 	print 'Degree Calculation done...'
-	window_size = len(degree_set)/no_roles
-	if len(degree_set)/float(no_roles) > window_size:
-		window_size += 1
-	role = [0 for i in xrange(node_count)] #Assign role 0 to all the nodes
+	role = [random.randint(0,no_roles-1) for i in xrange(node_count)] #Assign random role to all the nodes
 	role_vector = defaultdict(list)
 	role_vector_length = defaultdict(int)
 	
@@ -300,8 +298,8 @@ if __name__ == '__main__':
   threshold = int(sys.argv[3])
   file_name = basename(i_filename).split('.')[0]
   print file_name
-  stats_filename = 'logs/'+file_name +'_hill_init2_statistics.log'
-  output_filename = 'output/'+file_name +'_hill_init2_output.txt'
+  stats_filename = 'logs/'+file_name +'_hill_init3_statistics.log'
+  output_filename = 'output/'+file_name +'_hill_init3_output.txt'
   st_time = time.time()
   node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles,threshold)
   end_time = time.time()

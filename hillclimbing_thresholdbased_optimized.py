@@ -1,7 +1,7 @@
 '''Syntax to run the file:
-  python hillclimbing.py <Input_file_name> <Output_file_name> <no_of_nodes> <no_of_roles>
+  python hillclimbing_init1.py <Input_file_name> <no_of_roles> <threshold_size>
 Example:
- python hillclimbing.py 34.txt 6_out.txt 34 4
+ python hillclimbing_init1.py karate_directed.txt 4 5
 '''
 import sys
 import numpy as np
@@ -14,7 +14,7 @@ neighbor_nodes = {}
 predecessor_nodes = {}
 sigma = {}
 
-
+'''This computes centroids by using sigma(sum of neighbor role vector)'''
 def compute_centroid(role, sigma, role_vector_length):
 	if role_vector_length[role] == 0:
 		return np.zeros(len(sigma[role]))
@@ -63,7 +63,7 @@ def centroid_calculation(role_vector,neighbor_role_vector, no_roles):
 	  if key not in role_vector.keys():
 	    role_median[key] = np.zeros(no_roles)		
 	return role_median
-      
+'''Sum of neigbor role vector is calculated for each role. This is calculated once and is updated by add/subtract when a node is moved from one role to another'''       
 def sigma_calculation(role_vector,neighbor_role_vector,no_roles):
 	#print 'IN CENTROID FUNCTION'
 	global sigma
@@ -124,8 +124,6 @@ def hill_climbing(fname,no_roles,threshold):
         global neighbor_nodes,predecessor_nodes,sigma
 	f = open(fname, 'r+')
 	fromNode = []
-	#sigma = [[0 for j in xrange(no_roles)] for i in xrange(no_roles)]
-	#edgeList = []
 	flag1 = 0
 	flag2 = 0
 	cnt = 0
@@ -151,10 +149,8 @@ def hill_climbing(fname,no_roles,threshold):
 		  else:
 			src_node = int(record[0])
 			dst_node = int(record[1])
-		  #edgeList.append((int(record[0]),int(record[1])))
 		  fromNode.append(src_node)
 		  neighbor_nodes.setdefault(src_node,[]).append(dst_node)
-		  #neighbor_nodes.setdefault(dst_node,[]).append(src_node)
 		  predecessor_nodes.setdefault(dst_node,[]).append(src_node)
 
 	print 'Reading File is done...'
@@ -164,13 +160,11 @@ def hill_climbing(fname,no_roles,threshold):
 	for x in a:
 	  degrees[int(x[0])]=x[1]
 	degree_set = set(degrees.values())
-	#print 'degree_set',degree_set
 	degree_numpy = np.array(degrees.values())
 	print 'Degree Calculation done...'
 	window_size = len(degree_set)/no_roles
 	if len(degree_set)/float(no_roles) > window_size:
 		window_size += 1
-	#print 'window_size',window_size
 	role = [0 for i in xrange(node_count)]
 	i = 0
 	range_count = 1
@@ -179,17 +173,13 @@ def hill_climbing(fname,no_roles,threshold):
 	  
 	  for element in ind:
 		  role[element] = i
-	  #print i,range_count,degree
 	  if range_count == window_size:
 		i += 1
 		range_count = 0
 	  range_count += 1
 	  
 	print 'Role Assignment based on degree is done... '
-	'''for m in xrange(node_count):
-		if m not in role:
-		  role[m] = 0'''
-	#no_roles = len(set(role.values()))
+
 	role_vector = defaultdict(list)
 	role_vector_length = defaultdict(int)
 	
@@ -218,16 +208,7 @@ def hill_climbing(fname,no_roles,threshold):
 			node_list_copy = node_list.copy()
 			beg = time.time()
 			no_change_counter = 0
-			#candidate_count = 0
 			for candidate in node_list_copy:
-				#if node_list[z] <> -1:
-				#candidate = node_list[z]
-				#candidate_count += 1
-				'''if int(candidate)%100000 == 0:
-					print 'Candidate is:',candidate
-					#print 'DISTANCE:',distance
-					print time.time()'''
-				#print 'Candidate is:',candidate
 				max_gain = 0
 				max_gain_role_ind = -1
 				old_role = role[candidate]
@@ -243,23 +224,14 @@ def hill_climbing(fname,no_roles,threshold):
 						node_old_role = role[node]
 						pw += neighbor_role_vector[node]
 						dl[node_old_role] += 1 
-				#print 'DL VALUE IS:',dl
 
 				for new_role in xrange(no_roles): #Iteration through all the roles
-					#print 'NEW ROLE:',new_role,old_role
 					role[candidate] = new_role
 					if new_role <> old_role: # Condition not to leave any roles unassigned and not use the same role
-							#print 'NEW ROLE:',new_role,old_role
-							#print len(sigma)
 						role_vector_length[old_role] -= 1
 						role_vector_length[new_role] += 1
 						sigma[old_role] -= neighbor_role_vector[candidate] 
 						sigma[new_role] += neighbor_role_vector[candidate]
-						#Intermediate Centroid Calculation.
-						#role_median_temp = {}
-						#role_median_temp[old_role]=role_median[old_role]
-						#role_median_temp[new_role]=role_median[new_role]
-						#intermediate_median = intermediate_median_calculation(candidate,old_role,new_role,role_median_temp,role_vector_length,neighbor_role_vector)
 						intermediate_old = compute_centroid(old_role, sigma, role_vector_length)
 						intermediate_new = compute_centroid(new_role, sigma, role_vector_length)
 					
@@ -271,18 +243,6 @@ def hill_climbing(fname,no_roles,threshold):
 						old_centroid_new = role_median[new_role].dot(role_median[new_role])
 						A =  c_old*old_centroid_old - (c_old-1)*intermediate_centroid_old + c_new*old_centroid_new - (c_new+1)*intermediate_centroid_new
 						
-						#B_w Calculation
-						#dl = defaultdict(int) #Will hold all the predecessors role counts
-						#B_w = 0
-						#if candidate in predecessor_nodes:
-							#for node in predecessor_nodes[candidate]:
-								#node_old_role = role[node]
-								#pw_i = neighbor_role_vector[node][old_role]
-								#pw_j = neighbor_role_vector[node][new_role]
-								#B_w += 2*pw_i - 2*pw_j - 2
-								#dl[node_old_role] += 1 
-						#print 'B_w:',B_w
-						#print 'DL VALUE IS:',dl
 						B_w = 2*pw[old_role] - 2*pw[new_role] - 2*pred_count
 						
 						#R_L Calculation
@@ -314,7 +274,6 @@ def hill_climbing(fname,no_roles,threshold):
 
 							
 				if max_gain_role_ind <> -1:
-				  #print 'Optimal Gain for ',candidate,' moving from ',old_role,' to ',max_gain_role_ind,' is ',max_gain
 				  role[candidate] = max_gain_role_ind
 				  role_vector_length[old_role] -= 1
 				  role_vector_length[max_gain_role_ind] += 1
@@ -322,12 +281,8 @@ def hill_climbing(fname,no_roles,threshold):
 				  sigma[old_role] -= neighbor_role_vector[candidate]
 				  sigma[max_gain_role_ind] += neighbor_role_vector[candidate]
 
-				  #sigma[old_role] = map(sub, sigma[old_role], neighbor_role_vector[candidate])
-				  #sigma[max_gain_role_ind] = map(add, sigma[max_gain_role_ind], neighbor_role_vector[candidate])			  
+		  
 				  neighbor_role_vector = role_update(candidate,old_role,max_gain_role_ind,neighbor_role_vector,role)
-				  #Actual Function that updates centroid of the node and its predecessors. Commented out now for debugging and all role centroid calculation is used for debugging purpose
-
-				  #role_median=centroid_calculation(role_vector,neighbor_role_vector) #All Role Centroid Calculation
 				  role_median = centroid_update(candidate,role_median,role_vector_length,neighbor_role_vector,role,old_role,max_gain_role_ind)			  
 				  idle[candidate] = 0    
 				  
@@ -339,77 +294,63 @@ def hill_climbing(fname,no_roles,threshold):
 				  if idle[candidate] == threshold:
 					 node_list_count -= 1
 					 node_list.remove(candidate)
-					 #node_list[z] = -1
-				  #else:
-					 #node_list.add(candidate)
+
 
 			inner_iteration += 1
 			print 'Number of candidates',node_list_count
-			#print 'node_list_count',node_list_count
 			print 'no_change_counter',no_change_counter
 			if node_list_count == 0:
 				flag = False
 			if no_change_counter == node_count:
 				flag = False
 				role_change_flag = False
-			#print 'NODES UNCHANGED:',no_change_counter
 
 			print 'TIME SPENT:',time.time() - beg
 		iteration += 1
 		distance=F_calculation_new(neighbor_role_vector,role,role_median,node_count)
 		print 'DISTANCE:',distance
-		#print 'NODES UNCHANGED:',no_change_counter
-		#print 'TIME:',time.time()
 	print 'Final Distance:',distance
-	#print 'Final Role:',role
 	return node_count,role,distance,iteration-1,flag2
 	
 
-
-i_filename = sys.argv[1]
-no_roles = int(sys.argv[2])
-threshold = int(sys.argv[3])
-file_name = basename(i_filename).split('.')[0]
-print file_name
-stats_filename = 'logs/'+file_name +'_hill_statistics.txt'
-output_filename = 'output/'+file_name +'_hill_output.txt'
-st_time = time.time()
-node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles,threshold)
-end_time = time.time()
-total_time = end_time - st_time
-print 'TOTAL TIME:',total_time
-with open(stats_filename,'ab') as outfile:
-	text = 'FILE NAME: '+str(file_name)+'\n'
-	outfile.write(text)
-	text = 'NODE COUNT: '+str(node_count)+'\n'
-	outfile.write(text)
-	text = 'ROLE COUNT: '+str(no_roles)+'\n'
-	outfile.write(text)
-	text = 'THRESHOLD: '+str(threshold)+'\n'
-	outfile.write(text)	
-	text = 'ITERATIONS: '+str(iteration)+'\n'
-	outfile.write(text)
-	text =  'FINAL DISTANCE: '+ str(score)+'\n'
-	outfile.write(text)
-	text = 'START TIME: '+ str(st_time)+'\n'
-	outfile.write(text)
-	text = 'END TIME: '+ str(end_time)+'\n'
-	outfile.write(text)
-	text = 'TOTAL TIME: '+ str(total_time)+'\n'
-	outfile.write(text)
-with open(output_filename,'wb') as outfile:
-  for key in xrange(len(roles_final)):
-    if flag == 1:
-      text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
-    else:
-      text = str(key) +'\t' +str(roles_final[key]) +'\n'
-    outfile.write(text)
-  
-'''roles_final,score = hill_climbing(i_filename,no_nodes,no_roles)	
-colors = ['red','green','blue','yellow','cyan','orange','brown','white','purple','pink','coral','violet','gold','plum','lightgreen']
-#print colors
-with open(o_filename,'ab') as outfile:
-	for i in xrange(no_nodes):
-		text = str((i+1))+' [style = \"filled\" color= \"' + colors[roles_final[i]] + '\"];\n'
-		outfile.write(text)	
-	outfile.write('}')'''
+'''Main part that takes input arguments, calls the functions and writes the final output to files'''
+if __name__ == '__main__':
+  i_filename = sys.argv[1]
+  no_roles = int(sys.argv[2])
+  threshold = int(sys.argv[3])
+  file_name = basename(i_filename).split('.')[0]
+  print file_name
+  stats_filename = 'logs/'+file_name +'_hill_init1_statistics.log'
+  output_filename = 'output/'+file_name +'_hill__init1_output.txt'
+  st_time = time.time()
+  node_count,roles_final,score,iteration,flag = hill_climbing(i_filename,no_roles,threshold)
+  end_time = time.time()
+  total_time = end_time - st_time
+  print 'TOTAL TIME:',total_time
+  with open(stats_filename,'ab') as outfile:
+	  text = 'FILE NAME: '+str(file_name)+'\n'
+	  outfile.write(text)
+	  text = 'NODE COUNT: '+str(node_count)+'\n'
+	  outfile.write(text)
+	  text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	  outfile.write(text)
+	  text = 'THRESHOLD: '+str(threshold)+'\n'
+	  outfile.write(text)	
+	  text = 'ITERATIONS: '+str(iteration)+'\n'
+	  outfile.write(text)
+	  text =  'FINAL DISTANCE: '+ str(score)+'\n'
+	  outfile.write(text)
+	  text = 'START TIME: '+ str(st_time)+'\n'
+	  outfile.write(text)
+	  text = 'END TIME: '+ str(end_time)+'\n'
+	  outfile.write(text)
+	  text = 'TOTAL TIME: '+ str(total_time)+'\n'
+	  outfile.write(text)
+  with open(output_filename,'wb') as outfile:
+    for key in xrange(len(roles_final)):
+      if flag == 1:
+	text = str(key+1) +'\t' +str(roles_final[key]) +'\n'
+      else:
+	text = str(key) +'\t' +str(roles_final[key]) +'\n'
+      outfile.write(text)
+ 

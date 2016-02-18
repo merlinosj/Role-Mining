@@ -1,4 +1,8 @@
-#python exact.py 10.txt 10
+'''Syntax to run the file:
+  python exact.py <Input_file_name>
+Example:
+ python exact.py karate_directed.txt
+'''
 import sys
 import numpy as np
 from collections import defaultdict,OrderedDict,Counter
@@ -88,16 +92,7 @@ def exact_role_assignment(fname):
   print 'Role Count:',no_roles
 
   neighbor_role_vector = role_population(neighbor_nodes,role,node_count,no_roles)
-  #print neighbor_nodes
-  #print neighbor_role_vector
-  #print profile
-  #sorted_profile = sorted(profile, key=itemgetter(*range(no_roles)))
-  #print sorted_profile
-
   iteration = 1
-
-  '''if score == 0:
-    return role'''
   flag = True
   while flag:
 	  print 'Iteration:', iteration
@@ -111,7 +106,6 @@ def exact_role_assignment(fname):
 	  role[z[0][profile1]] = r
 	  for profile2 in xrange(1,len(z[0])):
 	    if z[1][profile1] == z[1][profile2]:
-	      #print 'MATCHING',z[0][profile1],z[0][profile2]
 	      role[z[0][profile2]] = r
 	    else:
 	      r += 1
@@ -128,43 +122,43 @@ def exact_role_assignment(fname):
 	  else:
 		flag = False
 	  iteration += 1
-	  #if iteration == 2:
-	  	#break
   return role,no_roles_new,node_count,iteration-1,flag2
 
-i_filename = sys.argv[1]
-file_name = basename(i_filename).split('.')[0]
-print file_name
-stats_filename = 'logs/'+file_name +'_exact_statistics.log'
-output_filename = 'output/'+file_name +'_exact_output.txt'
-st_time = time.time()
-roles_final,no_roles,node_count,iteration,flag = exact_role_assignment(i_filename)
-end_time = time.time()
+'''Main part that takes input arguments, calls the functions and writes the final output to files'''
+if __name__ == '__main__':
+  i_filename = sys.argv[1]
+  file_name = basename(i_filename).split('.')[0]
+  print file_name
+  stats_filename = 'logs/'+file_name +'_exact_statistics.log'
+  output_filename = 'output/'+file_name +'_exact_output.txt'
+  st_time = time.time()
+  roles_final,no_roles,node_count,iteration,flag = exact_role_assignment(i_filename)
+  end_time = time.time()
 
-print 'No of Roles:',no_roles
-with open(stats_filename,'wb') as outfile:
-	text = 'FILE NAME: '+str(file_name)+'\n'
-	outfile.write(text)
-	text = 'NODE COUNT: '+str(node_count)+'\n'
-	outfile.write(text)
-	text = 'ROLE COUNT: '+str(no_roles)+'\n'
-	outfile.write(text)
-	text = 'ITERATIONS: '+str(iteration)+'\n'
-	outfile.write(text)
-	text = 'START TIME: '+ str(st_time)+'\n'
-	outfile.write(text)
-	text = 'END TIME: '+ str(end_time)+'\n'
-	outfile.write(text)
-	total_time = end_time - st_time
-	text = 'TOTAL TIME: '+ str(total_time)+'\n'
-	outfile.write(text)
-with open(output_filename,'wb') as outfile:
-  for key, value in roles_final.iteritems():
-    if flag == 1:
-      text = str(key+1) +'\t' +str(value) +'\n'
-    else:
-      text = str(key) +'\t' +str(value) +'\n'
-    outfile.write(text)
+  print 'No of Roles:',no_roles
+  with open(stats_filename,'wb') as outfile:
+	  text = 'FILE NAME: '+str(file_name)+'\n'
+	  outfile.write(text)
+	  text = 'NODE COUNT: '+str(node_count)+'\n'
+	  outfile.write(text)
+	  text = 'ROLE COUNT: '+str(no_roles)+'\n'
+	  outfile.write(text)
+	  text = 'ITERATIONS: '+str(iteration)+'\n'
+	  outfile.write(text)
+	  text = 'START TIME: '+ str(st_time)+'\n'
+	  outfile.write(text)
+	  text = 'END TIME: '+ str(end_time)+'\n'
+	  outfile.write(text)
+	  total_time = end_time - st_time
+	  text = 'TOTAL TIME: '+ str(total_time)+'\n'
+	  outfile.write(text)
+  with open(output_filename,'wb') as outfile:
+    for key, value in roles_final.iteritems():
+      if flag == 1:
+	text = str(key+1) +'\t' +str(value) +'\n'
+      else:
+	text = str(key) +'\t' +str(value) +'\n'
+      outfile.write(text)
 	
 
 
