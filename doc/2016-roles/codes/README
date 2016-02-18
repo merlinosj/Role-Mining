@@ -1,0 +1,42 @@
+ There are three algorithms that are implemented for role mining.
+ Algorithm:1 Exact Computation
+ ==============================
+ File Name: exact.py
+ Syntax: python exact.py <input_filename>
+ Example: python exact.py data/facebook_directed.txt
+ 
+ Algorithm:2 Hillclimbing Algorithm
+ =============================
+ There are four variants of the algorithm. The variants are based on the initialization of partial solution.
+ 
+ 1.Degree based initialization
+ File Name: hillclimbing_init1.py
+ Syntax: python hillclimbing_init1.py <input_filename> <No_of_roles> <Threshold_value>
+ Example: python hillclimbing_init1.py data/facebook_directed.txt 10 5
+
+ 2.All nodes with one role initialization
+  File Name: hillclimbing_init2.py
+ Syntax: python hillclimbing_init2.py <input_filename> <No_of_roles> <Threshold_value>
+ Example: python hillclimbing_init2.py data/facebook_directed.txt 10 5
+ 
+ 3.Randome role assignment initialization
+ File Name: hillclimbing_init3.py
+ Syntax: python hillclimbing_init3.py <input_filename> <No_of_roles> <Threshold_value>
+ Example: python hillclimbing_init3.py data/facebook_directed.txt 10 5
+ 
+ 4.K-Means based initialization
+ File Name: hillclimbing_init4.py
+ Syntax: python hillclimbing_init4.py <input_filename> <No_of_roles> <Threshold_value>
+ Example: python hillclimbing_init4.py data/facebook_directed.txt 10 5
+ 
+  Algorithm:3 K-Means Algorithm
+ =============================
+ File Name: kmeans.py
+ Syntax: python kmeans.py <input_filename> <No_of_roles>
+ Example: python kmeans.py data/facebook_directed.txt 10
+ 
+ 
+ NOTE: BEFORE EXECUTING ANY ALGORITHMS, PLEASE CREATE TWO FOLDERS NAMED logs and output IN THE CURRENT DIRECTORY WHERE THE LOGS AND RESULTS WILL BE STORED
+ 
+ There is also an additional file which converts the undirected graph to directed graph so that it can be used in the algorithm.
+ There are also some scripts that were used to calculate the distance metrics such as kendal-tau and munkres etc.
